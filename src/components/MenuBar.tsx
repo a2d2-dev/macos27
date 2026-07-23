@@ -42,9 +42,10 @@ export function MenuBar() {
     }
 
     function handlePointerDown(event: PointerEvent) {
-      const target = event.target as HTMLElement | null;
+      const target = event.target;
+      const activeMenu = target instanceof Element ? target.closest('[data-menu-id]') : null;
 
-      if (headerRef.current && target && headerRef.current.contains(target)) {
+      if (activeMenu?.getAttribute('data-menu-id') === openMenuId) {
         return;
       }
 
@@ -68,7 +69,7 @@ export function MenuBar() {
   return (
     <header ref={headerRef} className="glass-surface fixed left-0 top-0 z-[10000] flex h-7 w-full items-center justify-between px-3 text-[13px] font-medium">
       <nav className="relative z-10 flex min-w-0 items-center gap-4">
-        <div className="relative">
+        <div className="relative" data-menu-id="apple">
           <button
             type="button"
             className={`grid h-6 w-7 place-items-center rounded-md outline-none ${openMenuId === 'apple' ? 'bg-white/25' : 'hover:bg-white/20 focus-visible:bg-white/25'}`}
@@ -84,7 +85,7 @@ export function MenuBar() {
             </div>
           ) : null}
         </div>
-        <div className="relative">
+        <div className="relative" data-menu-id="app">
           <button
             type="button"
             className={`h-6 rounded-md px-1.5 font-semibold outline-none ${openMenuId === 'app' ? 'bg-white/25' : 'hover:bg-white/20 focus-visible:bg-white/25'}`}
@@ -101,7 +102,7 @@ export function MenuBar() {
         </div>
         <div className="hidden items-center gap-4 md:flex">
           {finderMenus.map((menu) => (
-            <div key={menu.id} className="relative">
+            <div key={menu.id} className="relative" data-menu-id={menu.id}>
               <button
                 className={`h-6 rounded-md px-1 outline-none ${openMenuId === menu.id ? 'bg-white/25' : 'hover:bg-white/20 focus-visible:bg-white/25'}`}
                 type="button"
