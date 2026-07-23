@@ -22,6 +22,7 @@ body {
 }
 
 button,
+input,
 textarea {
   font: inherit;
 }
@@ -54,6 +55,20 @@ button {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, var(--desktop-vignette), rgba(0, 0, 0, 0.18));
+}
+
+.wallpaper-aurora {
+  background:
+    radial-gradient(circle at 28% 82%, rgba(180, 255, 224, 0.68) 0 10%, transparent 28%),
+    radial-gradient(circle at 72% 30%, rgba(45, 212, 191, 0.72) 0 18%, transparent 40%),
+    linear-gradient(158deg, rgba(13, 27, 78, 1) 0%, rgba(15, 118, 110, 0.96) 42%, rgba(167, 243, 208, 0.88) 70%, rgba(240, 253, 250, 1) 100%);
+}
+
+.wallpaper-dawn {
+  background:
+    radial-gradient(circle at 25% 76%, rgba(255, 247, 237, 0.75) 0 12%, transparent 30%),
+    radial-gradient(circle at 76% 24%, rgba(251, 191, 36, 0.72) 0 18%, transparent 40%),
+    linear-gradient(160deg, rgba(255, 247, 237, 1) 0%, rgba(251, 191, 36, 0.96) 34%, rgba(249, 115, 22, 0.94) 60%, rgba(124, 45, 18, 1) 100%);
 }
 
 .dock-fisheye {

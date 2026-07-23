@@ -1,4 +1,5 @@
 import type { AppDefinition } from './types';
+import { calculatorApp } from './calculator';
 import { finderApp } from './finder';
 import { musicApp } from './music';
 import { notesApp } from './notes';
@@ -11,6 +12,7 @@ export const apps: AppDefinition[] = [
   notesApp,
   previewApp,
   musicApp,
+  calculatorApp,
   settingsApp,
   textEditApp,
 ];

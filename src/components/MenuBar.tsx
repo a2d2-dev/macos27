@@ -26,7 +26,11 @@ function formatClock(date: Date) {
   }).format(date);
 }
 
-export function MenuBar() {
+type MenuBarProps = {
+  onOpenSpotlight: () => void;
+};
+
+export function MenuBar({ onOpenSpotlight }: MenuBarProps) {
   const headerRef = useRef<HTMLElement>(null);
   const now = useSystemStore((state) => state.now);
   const toggleControlCenter = useSystemStore((state) => state.toggleControlCenter);
@@ -133,7 +137,14 @@ export function MenuBar() {
         >
           <SlidersHorizontal size={15} />
         </button>
-        <Search size={15} aria-label="Spotlight" />
+        <button
+          type="button"
+          className="grid h-6 w-6 place-items-center rounded-md hover:bg-white/20 focus-visible:bg-white/25"
+          aria-label="Spotlight"
+          onClick={onOpenSpotlight}
+        >
+          <Search size={15} />
+        </button>
         <Sparkles size={15} aria-label="Siri" className="text-fuchsia-400" />
         <time dateTime={now.toISOString()}>{formatClock(now)}</time>
       </div>
