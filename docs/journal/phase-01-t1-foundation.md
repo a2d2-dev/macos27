@@ -1,7 +1,7 @@
 # 阶段 01 · T1 地基派发与实施
 
 **时间**：2026-07-23 起
-**状态**：✅ 已实施，待 review/裁决
+**状态**：✅ 完成（已合并 main，merge 4e8e022）
 
 ---
 
@@ -32,4 +32,12 @@
 4. `Dock.tsx:5` 硬编码 app id→配色，新增 app 得 undefined（Major）→ 接受：违背 T1"一行注册"核心契约，合并前必修（阻塞 T2/T3/T4）。
 5. `test-report.md:32` "1-8 全过"覆盖过满（Minor）→ 接受：结论收敛，补小视口/pointercancel/扩展性验证。
 
-**整改与合并**：派 codex 整改（同分支 feat/t1-foundation，不合并）→ 复审 → 合并 main → 开 T2/T3/T4。
+**整改**：codex 整改 5 项并推送 `12d2967`（同分支）。CEO 独立核对全部 diff 为 root-cause 修复：maximizedFrame 去硬下限、clampFrame maxY 减 dockReserve、drag/resize 增 pointercancel + 卸载清理、iconGradient 入契约、报告收敛。`npm run build` 亲跑绿。3 张 800×600 截图实证（`docs/artifacts/t1-fix-20260723/`）。
+
+**复审**：fresh-context codex（read-only）逐条复审 → **APPROVE**，5 项全 PASS（带 文件:行号）、无新回归；仅提示 SSR 守卫 `typeof window` vs `globalThis` 风格不一致（非功能性，记为技术债）。
+
+**CEO 合并门槛 — 一行注册契约端到端验证**（对应自评洞 #3）：亲手加探针 app（自包含目录 + registry 一行、通用层零改动）→ `npm run build` 绿 → agent-browser 截图确认第 7 个图标带自声明渐变渲染 → 撤探针复原。契约由"结构验证"升级为"行为验证"。
+
+**合并**：`git merge --no-ff feat/t1-foundation → main`（merge commit `4e8e022`），已 push origin/main。T1 关闭。
+
+**遗留/技术债**：① SSR 守卫写法不一致（低优，后续统一）；② 参考站未系统盘点（并行 T2/T3 前补）。

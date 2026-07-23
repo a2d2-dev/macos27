@@ -8,14 +8,22 @@
 ## 当前状态
 - 流程：**Matt**（CLAUDE.md 未声明 `ceo-team.flow`，按契约默认并已汇报）
 - 技术栈：Vite · React · TypeScript · Tailwind · Zustand
-- 进行中：T1 地基与外壳（walking skeleton，阻塞 T2/T3/T4）
+- 已合并：T1 地基与外壳（main `4e8e022`，对抗式 review 通过 + 契约端到端验证）
+- 进行中：T2/T3/T4 三 ticket 并行（各独立 worktree）
 
 ## 阶段索引
 
 | 阶段 | 标题 | 状态 | 记录 |
 |------|------|------|------|
 | 00 | 启动与流程判定 | ✅ 完成 | [phase-00-startup.md](./phase-00-startup.md) |
-| 01 | T1 地基派发与实施 | ⏳ 进行中 | [phase-01-t1-foundation.md](./phase-01-t1-foundation.md) |
+| 01 | T1 地基派发与实施 | ✅ 完成（合并 4e8e022） | [phase-01-t1-foundation.md](./phase-01-t1-foundation.md) |
+| 02 | T2/T3/T4 并行开发 | ⏳ 进行中 | [phase-02-parallel-apps.md](./phase-02-parallel-apps.md) |
+
+## 过程改进（自评落地）
+- 洞 #1 哨兵假完成 → 终态以可验证交付物（新 commit/build 绿/目标截图）为准，非会话静默。
+- 洞 #3 契约只验结构 → 合并前加"探针 app 端到端"硬门槛（已在 T1 落地）。
+- 洞 #4 等待空转 → codex 跑时并行推进 CEO 侧产出（细化 tickets）。
+- 洞 #6 journal 滞后 → 每次合并前追到实时。
 
 ## 关联文档
 - 设计与验收：[`../spec.md`](../spec.md)
