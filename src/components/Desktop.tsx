@@ -21,7 +21,7 @@ export function Desktop() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.code === 'Space') {
+      if (event.metaKey && event.code === 'Space') {
         event.preventDefault();
         setIsSpotlightOpen((open) => !open);
       }

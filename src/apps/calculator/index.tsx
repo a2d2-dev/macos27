@@ -5,10 +5,16 @@ import { useWindowStore } from '../../store/windowStore';
 
 type Operator = '+' | '-' | '*' | '/';
 
+type LastOperation = {
+  operator: Operator;
+  operand: number;
+};
+
 type CalculatorState = {
   display: string;
   storedValue: number | null;
   pendingOperator: Operator | null;
+  lastOperation: LastOperation | null;
   waitingForOperand: boolean;
   error: boolean;
 };
@@ -17,6 +23,7 @@ const initialState: CalculatorState = {
   display: '0',
   storedValue: null,
   pendingOperator: null,
+  lastOperation: null,
   waitingForOperand: false,
   error: false,
 };
@@ -123,6 +130,10 @@ function CalculatorApp() {
         return current;
       }
 
+      if (current.pendingOperator && current.storedValue !== null) {
+        return { ...current, display: formatResult((current.storedValue * Number(current.display)) / 100), waitingForOperand: false };
+      }
+
       return { ...current, display: formatResult(Number(current.display) / 100) };
     });
   };
@@ -146,6 +157,7 @@ function CalculatorApp() {
           display: formatResult(result),
           storedValue: result,
           pendingOperator: operator,
+          lastOperation: null,
           waitingForOperand: true,
           error: false,
         };
@@ -155,6 +167,7 @@ function CalculatorApp() {
         ...current,
         storedValue: inputValue,
         pendingOperator: operator,
+        lastOperation: null,
         waitingForOperand: true,
       };
     });
@@ -162,11 +175,33 @@ function CalculatorApp() {
 
   const equals = () => {
     setState((current) => {
-      if (current.error || !current.pendingOperator || current.storedValue === null) {
+      if (current.error) {
         return current;
       }
 
-      const result = calculate(current.storedValue, Number(current.display), current.pendingOperator);
+      if (current.pendingOperator && current.storedValue !== null) {
+        const operand = Number(current.display);
+        const result = calculate(current.storedValue, operand, current.pendingOperator);
+
+        if (result === null) {
+          return { ...initialState, display: 'Cannot divide by zero', error: true };
+        }
+
+        return {
+          display: formatResult(result),
+          storedValue: null,
+          pendingOperator: null,
+          lastOperation: { operator: current.pendingOperator, operand },
+          waitingForOperand: true,
+          error: false,
+        };
+      }
+
+      if (!current.lastOperation) {
+        return current;
+      }
+
+      const result = calculate(Number(current.display), current.lastOperation.operand, current.lastOperation.operator);
 
       if (result === null) {
         return { ...initialState, display: 'Cannot divide by zero', error: true };
@@ -176,6 +211,7 @@ function CalculatorApp() {
         display: formatResult(result),
         storedValue: null,
         pendingOperator: null,
+        lastOperation: current.lastOperation,
         waitingForOperand: true,
         error: false,
       };

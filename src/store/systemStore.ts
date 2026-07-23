@@ -8,6 +8,9 @@ export type ControlCenterToggleId = 'wifi' | 'bluetooth' | 'airdrop' | 'focus' |
 
 type ControlCenterToggles = Record<ControlCenterToggleId, boolean>;
 
+const systemThemeQuery = '(prefers-color-scheme: dark)';
+let unsubscribeSystemTheme: (() => void) | null = null;
+
 type SystemState = {
   theme: ThemeMode;
   appearanceMode: AppearanceMode;
@@ -41,7 +44,26 @@ function resolveTheme(appearanceMode: AppearanceMode): ThemeMode {
     return 'light';
   }
 
-  return globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return globalThis.matchMedia(systemThemeQuery).matches ? 'dark' : 'light';
+}
+
+function stopFollowingSystemTheme() {
+  unsubscribeSystemTheme?.();
+  unsubscribeSystemTheme = null;
+}
+
+function followSystemTheme(setTheme: (theme: ThemeMode) => void) {
+  stopFollowingSystemTheme();
+
+  if (typeof globalThis.matchMedia !== 'function') {
+    return;
+  }
+
+  const mediaQuery = globalThis.matchMedia(systemThemeQuery);
+  const handleChange = (event: MediaQueryListEvent) => setTheme(event.matches ? 'dark' : 'light');
+
+  mediaQuery.addEventListener('change', handleChange);
+  unsubscribeSystemTheme = () => mediaQuery.removeEventListener('change', handleChange);
 }
 
 export const useSystemStore = create<SystemState>((set) => ({
@@ -64,12 +86,29 @@ export const useSystemStore = create<SystemState>((set) => ({
     nightShift: false,
   },
   setNow: (now) => set({ now }),
-  toggleTheme: () =>
+  toggleTheme: () => {
+    stopFollowingSystemTheme();
     set((state) => {
       const theme = state.theme === 'light' ? 'dark' : 'light';
       return { theme, appearanceMode: theme };
-    }),
-  setAppearanceMode: (appearanceMode) => set({ appearanceMode, theme: resolveTheme(appearanceMode) }),
+    });
+  },
+  setAppearanceMode: (appearanceMode) => {
+    stopFollowingSystemTheme();
+    set({ appearanceMode, theme: resolveTheme(appearanceMode) });
+
+    if (appearanceMode === 'auto') {
+      followSystemTheme((theme) =>
+        set((state) => {
+          if (state.appearanceMode !== 'auto') {
+            return {};
+          }
+
+          return { theme };
+        }),
+      );
+    }
+  },
   setWallpaper: (wallpaperId) => set({ wallpaperId }),
   toggleControlCenter: () => set((state) => ({ isControlCenterOpen: !state.isControlCenterOpen, openMenuId: null })),
   closeControlCenter: () => set({ isControlCenterOpen: false }),

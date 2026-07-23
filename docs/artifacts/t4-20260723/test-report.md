@@ -1,31 +1,33 @@
-# T4 核心应用集 + Spotlight 测试报告
+# T4 Apps remediation 回归测试报告
 
 ## 实验目的
 
-验证 T4 交付范围：Calculator 真实四则运算与除零处理、System Settings 外观/壁纸/About 三个面板、TextEdit 标题与正文编辑、Spotlight 通过 Cmd+Space 搜索并 Enter 启动应用，以及生产构建通过。
+验证本次 remediation 范围内的真实行为：Calculator 重复等号、上下文百分号、减法、乘法、链式运算与小数；Spotlight 只响应 Cmd/Meta+Space；Appearance 的 Auto 模式能跟随浏览器/系统 color-scheme 变化，并在切离 Auto 后停止跟随；生产构建通过。
 
 ## 实验步骤
 
-1. 在 `/data/src/github.com/a2d2-dev/_wt/t4-apps` 执行 `npm install` 安装依赖。
-2. 执行 `npm run build` 验证 TypeScript 与 Vite 生产构建。
-3. 用绝对路径启动 dev server：`npm --prefix /data/src/github.com/a2d2-dev/_wt/t4-apps run dev -- --host 0.0.0.0`。
-4. 从 Vite 输出确认本次服务端口为 `5174`，仅访问 `http://10.126.126.12:5174/`。
-5. 使用 `agent-browser` 会话 `t4-apps` 进行 UI 验证和截图。
+1. 在 `/data/src/github.com/a2d2-dev/_wt/t4-apps` 执行 `npm run build`。
+2. 启动本 worktree 的 dev server：`npm run dev -- --host 0.0.0.0`。
+3. Vite 自动避让已占用的 `5173`，本次实际服务地址为 `http://10.126.126.12:5174/`。
+4. 使用 `agent-browser --session t4-apps` 访问该地址并执行 UI 回归；截图保存到 `docs/artifacts/t4-20260723/`。
 
 ## 实验记录
 
-- 构建：`npm run build` 通过，输出 `✓ built`。
-- Calculator：通过 Dock/Spotlight 打开应用，点击 `12 + 7 =` 得到 `19`；点击 `8 ÷ 0 =` 得到 `Cannot divide by zero`。
-  - 截图：`calculator-12-plus-7-result.png`
-  - 截图：`calculator-divide-zero.png`
-- System Settings 外观：在 Appearance 面板选择 Dark，菜单栏、窗口、Dock 和 widgets 全局切换为深色。
-  - 截图：`settings-dark-theme.png`
-- System Settings 壁纸：在 Wallpaper 面板选择 Aurora，桌面背景真实切换为绿色 Aurora 背景。
-  - 截图：`settings-wallpaper-aurora.png`
-- System Settings About：打开 About This Mac 面板，展示型号、芯片、内存、序列号 mock 信息。
-  - 截图：`settings-about-this-mac.png`
-- TextEdit：编辑标题和正文，重新聚焦窗口后内容仍保留在当前浏览器会话中。
-  - 截图：`textedit-edited.png`
-- Spotlight：按 `Meta+Space` 打开，输入 `calc` 过滤到 Calculator，按 Enter 启动 Calculator 并关闭 Spotlight；按 Escape 关闭 Spotlight 的快照检查也通过。
-  - 截图：`spotlight-search-calculator.png`
-  - 截图：`spotlight-enter-launch-calculator.png`
+- 构建：`npm run build` 通过。关键输出：`✓ 1602 modules transformed.`、`✓ built in 4.79s`。
+- 浏览器错误检查：`agent-browser --session t4-apps errors` 无输出。
+- Calculator 链式运算：通过 Calculator 按钮执行 `AC, 2, +, 3, x, 4, =`，显示 `20`。该基础模式按即时求值处理，即 `2 + 3` 先得到 `5`，再乘以 `4`。
+  - 证据截图：`calculator-chained-2-plus-3-times-4.png`
+- Calculator 重复等号：通过 Calculator 按钮执行 `AC, 2, +, 3, =, =, =`，显示 `11`，覆盖 `2 + 3 = 5` 后继续两次应用 `+ 3` 得到 `8`、`11`。
+  - 证据截图：`calculator-repeated-equals-2-plus-3.png`
+- Calculator 上下文百分号：通过 Calculator 按钮执行 `AC, 2, 0, 0, +, 1, 0, %, =`，显示 `220`；`10 %` 在 pending `+` 下被转换为 `200` 的 `10%`，即右操作数 `20`。
+  - 证据截图：`calculator-contextual-percent-200-plus-10.png`
+- Calculator 减法：通过 Calculator 按钮执行 `AC, 9, -, 4, =`，浏览器返回显示值 `5`。
+- Calculator 乘法：通过 Calculator 按钮执行 `AC, 6, x, 7, =`，浏览器返回显示值 `42`。
+- Calculator 小数：通过 Calculator 按钮执行 `AC, 1, ., 5, +, 2, ., 2, 5, =`，浏览器返回显示值 `3.75`。
+- Spotlight 快捷键：在页面中执行 `Control+Space` 后重新 snapshot，未出现 `Spotlight Search` textbox；执行 `Meta+Space` 后重新 snapshot，出现 `textbox "Spotlight Search"`。本次未截图，仅记录 agent-browser snapshot 结果。
+- Appearance Auto 跟随系统主题：在 Settings 的 Appearance 面板中，先执行 `agent-browser set media light`，点击 Auto 后 `main.className` 为 `theme-light ...`；随后执行 `agent-browser set media dark`，`main.className` 变为 `theme-dark ...`；再执行 `agent-browser set media light`，`main.className` 回到 `theme-light ...`。
+- Appearance 切离 Auto 清理监听：点击 Light 后执行 `agent-browser set media dark`，`main.className` 仍为 `theme-light ...`，未被 stale Auto listener 改回 dark。本次未截图，仅记录 agent-browser eval 返回值。
+
+## 未覆盖
+
+- 本次 remediation 回归没有重新验证旧报告中的 Finder、TextEdit、Wallpaper、About This Mac、除零截图等非本次变更范围项目；旧截图仍保留在目录中，但不作为本次结论依据。
