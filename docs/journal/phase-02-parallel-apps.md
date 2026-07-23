@@ -30,5 +30,9 @@
 
 **Wave1 小整改（并行派发中）**：T2 修面包屑显示名 + 报告证据一致；T3 修点外关闭覆盖菜单栏内区域。trivial 范围，CEO 自验（diff+build+截图）后合并，不再起完整二轮 review。
 
-**合并**：（待整改回来）
-**Wave2 T4**：（待 T3 合并后起）
+**Wave1 整改**：T2 `3717af8`（面包屑改用显示名，root cause：按各层 segmentPath 解析 name）、T3 `493c5c1`（点外关闭改为只把当前打开菜单的 data-menu-id 容器视为 inside，菜单栏内其他区域点击也关闭）。CEO 自验 diff+build+截图通过，trivial 未起二轮 review。
+
+**Wave1 合并**：`--no-ff` 合并 T2(`406fee6`)、T3(`39e9a7f`)→ main，零冲突（文件所有权隔离生效）。合并后 main `npm run build` 绿。
+**集成验证**（CEO）：起 dev 截 main 全景 → 首帧空白（agent-browser 时序假象）；复核 console 无错 + body 318 字真内容 + 重截正常 → 菜单栏/时钟/日历/天气/股票/Dock/Finder 共存无碍。**未把 glitch 误判为产品缺陷**（复核义务）。main push 39e9a7f。
+
+**Wave2 T4**：T2/T3 已并入，起 `feat/t4-apps` worktree（从最新 main，承接最终 MenuBar）实施 计算器/系统设置/TextEdit + Spotlight。
