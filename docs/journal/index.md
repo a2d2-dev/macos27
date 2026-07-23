@@ -8,8 +8,7 @@
 ## 当前状态
 - 流程：**Matt**（CLAUDE.md 未声明 `ceo-team.flow`，按契约默认并已汇报）
 - 技术栈：Vite · React · TypeScript · Tailwind · Zustand
-- 已合并：T1 地基与外壳（main `4e8e022`，对抗式 review 通过 + 契约端到端验证）
-- 进行中：T2/T3/T4 三 ticket 并行（各独立 worktree）
+- **✅ 全部完成并交付**：T1/T2/T3/T4 均已合并 main（`b796f1f`），整站集成验证通过。
 
 ## 阶段索引
 
@@ -17,7 +16,8 @@
 |------|------|------|------|
 | 00 | 启动与流程判定 | ✅ 完成 | [phase-00-startup.md](./phase-00-startup.md) |
 | 01 | T1 地基派发与实施 | ✅ 完成（合并 4e8e022） | [phase-01-t1-foundation.md](./phase-01-t1-foundation.md) |
-| 02 | T2/T3/T4 并行开发 | ⏳ 进行中 | [phase-02-parallel-apps.md](./phase-02-parallel-apps.md) |
+| 02 | T2/T3/T4 并行开发 | ✅ 完成（合并至 b796f1f） | [phase-02-parallel-apps.md](./phase-02-parallel-apps.md) |
+| 03 | 交付与最终集成验证 | ✅ 完成 | [phase-03-delivery.md](./phase-03-delivery.md) |
 
 ## 过程改进（自评落地）
 - 洞 #1 哨兵假完成 → 终态以可验证交付物（新 commit/build 绿/目标截图）为准，非会话静默。
