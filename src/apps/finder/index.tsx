@@ -107,13 +107,18 @@ function pathTitle(path: string, currentName: string) {
   return currentName;
 }
 
-function pathCrumbs(path: string, currentName: string) {
+function pathCrumbs(path: string, getItemByPath: (path: string) => FsItem | null) {
   if (path === '/') {
     return 'Macintosh HD';
   }
 
   const segments = path.split('/').filter(Boolean);
-  return ['Macintosh HD', ...segments.slice(0, -1), currentName].join(' / ');
+  const names = segments.map((_, index) => {
+    const segmentPath = `/${segments.slice(0, index + 1).join('/')}`;
+    return getItemByPath(segmentPath)?.name ?? segments[index];
+  });
+
+  return ['Macintosh HD', ...names].join(' / ');
 }
 
 function ItemGlyph({ item, selected, size = 'large' }: { item: FsItem; selected: boolean; size?: 'small' | 'large' }) {
@@ -285,7 +290,7 @@ function FinderApp() {
             <div className="min-w-0 flex-1">
               <div className="truncate text-[15px] font-semibold leading-5">{title}</div>
               <div className="truncate text-[11px] text-[var(--text-secondary)]">
-                {pathCrumbs(currentPath, currentItem?.name ?? 'Finder')}
+                {pathCrumbs(currentPath, getItemByPath)}
               </div>
             </div>
 

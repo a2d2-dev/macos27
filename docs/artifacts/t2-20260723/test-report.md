@@ -32,6 +32,7 @@
 - 空态：进入 `Invoices` 后正文包含 `This folder is empty`、`0 items, 148.73 GB available`。
 - 选中状态：点击 `Roadmap.md` 后正文/状态栏包含 `Roadmap.md selected`。
 - 深色模式：点击菜单栏 `Toggle dark mode` 后截图显示 Finder 深色玻璃界面。
+- 面包屑复验：进入 `Documents / Design / Liquid Glass` 后正文包含 `Macintosh HD / Documents / Design / Liquid Glass`。
 
 ## 截图证据
 
@@ -39,3 +40,5 @@
 - `/data/src/github.com/a2d2-dev/_wt/t2-finder/docs/artifacts/t2-20260723/02-list-view.png`
 - `/data/src/github.com/a2d2-dev/_wt/t2-finder/docs/artifacts/t2-20260723/03-documents-folder.png`
 - `/data/src/github.com/a2d2-dev/_wt/t2-finder/docs/artifacts/t2-20260723/04-dark-mode.png`
+- `/data/src/github.com/a2d2-dev/_wt/t2-finder/docs/artifacts/t2-20260723/05-roadmap-selected.png`
+- `/data/src/github.com/a2d2-dev/_wt/t2-finder/docs/artifacts/t2-20260723/06-breadcrumb-display-names.png`
