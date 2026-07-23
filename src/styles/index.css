@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  color: var(--text-primary);
+  background: #89d3ff;
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+.desktop-wallpaper {
+  background:
+    radial-gradient(circle at 30% 78%, rgba(255, 255, 255, 0.68) 0 12%, transparent 32%),
+    radial-gradient(circle at 76% 28%, rgba(108, 201, 255, 0.75) 0 18%, transparent 38%),
+    radial-gradient(circle at 52% 68%, rgba(94, 164, 216, 0.7) 0 18%, transparent 36%),
+    linear-gradient(165deg, rgba(225, 250, 255, 0.94) 0%, rgba(132, 212, 255, 0.95) 22%, rgba(52, 129, 207, 0.92) 48%, rgba(28, 86, 160, 0.98) 74%, rgba(11, 38, 94, 1) 100%);
+}
+
+.desktop-wallpaper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(145deg, transparent 0 42%, rgba(255, 255, 255, 0.48) 42.4% 43.3%, transparent 44%),
+    linear-gradient(23deg, transparent 0 47%, rgba(14, 61, 123, 0.34) 47.3% 56%, transparent 56.5%),
+    radial-gradient(ellipse at 52% 92%, rgba(4, 25, 72, 0.48) 0 18%, transparent 44%);
+  opacity: 0.78;
+}
+
+.desktop-wallpaper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--desktop-vignette), rgba(0, 0, 0, 0.18));
+}
+
+.dock-fisheye {
+  transition: transform 170ms ease, margin 170ms ease, filter 170ms ease;
+}
+
+.resize-handle {
+  position: absolute;
+  z-index: 20;
+}
