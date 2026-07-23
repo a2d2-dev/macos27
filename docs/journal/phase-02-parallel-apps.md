@@ -35,4 +35,12 @@
 **Wave1 合并**：`--no-ff` 合并 T2(`406fee6`)、T3(`39e9a7f`)→ main，零冲突（文件所有权隔离生效）。合并后 main `npm run build` 绿。
 **集成验证**（CEO）：起 dev 截 main 全景 → 首帧空白（agent-browser 时序假象）；复核 console 无错 + body 318 字真内容 + 重截正常 → 菜单栏/时钟/日历/天气/股票/Dock/Finder 共存无碍。**未把 glitch 误判为产品缺陷**（复核义务）。main push 39e9a7f。
 
-**Wave2 T4**：T2/T3 已并入，起 `feat/t4-apps` worktree（从最新 main，承接最终 MenuBar）实施 计算器/系统设置/TextEdit + Spotlight。
+**Wave2 T4**：T2/T3 已并入，起 `feat/t4-apps` worktree（从最新 main df19b2f）实施。
+
+**T4 实现** `acdce8e`（计算器真实四则/系统设置外观+壁纸+关于/TextEdit/Spotlight Cmd+Space 搜 registry 启动）。独立 build 绿；CEO 复核截图：计算器 12+7=19、设置壁纸切 Aurora 桌面真变、外观切 dark 全局真变、Spotlight 搜 calc 命中启动。calculator 走一行注册契约。
+
+**T4 对抗式 review → REQUEST_CHANGES（2 Major+3 Minor，reviewer 校准佳，无误报）；CEO 裁决全接受**：
+1. 计算器重复 `=` 不重复上次运算(Major)；2. `%` 只 /100 忽略语境(Minor)；3. 快捷键连 Ctrl+Space 一起劫持(Minor)；4. `auto` 外观只解析一次不订阅 matchMedia(Major)；5. 测试报告称"验证真实四则"实测覆盖不足(Minor)。
+（预先在派发里声明 artifacts 非越界，本轮未再现 T2/T3 那类误报。）
+
+**T4 整改**（派发中）：5 项 root cause 修复 + 扩充计算器复验。改完 CEO 自验 → 合并 → 全站集成验证 → 交付。
