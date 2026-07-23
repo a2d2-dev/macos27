@@ -22,5 +22,14 @@
 - 命令证据：`npm install && npm run build` 成功，输出 `up to date, audited 140 packages`、`found 0 vulnerabilities`、`tsc --noEmit && vite build`、`✓ 1596 modules transformed`、`✓ built in 2.88s`；`npm run dev` 成功启动，实际地址 `http://10.126.126.12:5174/`。
 - 截图证据：`docs/artifacts/t1-20260723/desktop-overview.png`、`docs/artifacts/t1-20260723/notes-window.png`、`docs/artifacts/t1-20260723/dock-fisheye.png`、`docs/artifacts/t1-20260723/dark-mode.png`。
 - 交互证据：详见 `docs/artifacts/t1-20260723/test-report.md`，覆盖时钟刷新、Dock 运行态、拖拽、缩放、最小化恢复、最大化还原、关闭、z-order 和 Liquid Glass 样式。
-- 对抗式 review 结论：待 CEO 派发 fresh-context review。
-- 裁决与合并：待 CEO review 闭环后处理。
+- CEO 独立复核：亲自 `npm run build` 通过（exit 0，1596 modules，非假绿）；4 张截图逐张确认真 UI；已 push origin/feat/t1-foundation。
+- 对抗式 review（fresh-context codex，read-only）结论：**REQUEST_CHANGES**，4 Major + 1 Minor，均带 文件:行号 证据。
+
+**裁决（CEO，全部接受）**：
+1. `windowStore.ts:154` 最大化 `Math.max(720, innerWidth-20)` 小视口越界（Major）→ 接受：最大化应恒等可视区，去掉硬下限。
+2. `Window.tsx:26` maxY 未减 dockReserve，窗口可拖到 Dock 后（Major）→ 接受：与高度预留不一致，真实遮挡。
+3. `Window.tsx:115` pointer 监听仅 pointerup 清理，无 pointercancel/卸载（Major）→ 接受：泄漏+状态卡死风险。
+4. `Dock.tsx:5` 硬编码 app id→配色，新增 app 得 undefined（Major）→ 接受：违背 T1"一行注册"核心契约，合并前必修（阻塞 T2/T3/T4）。
+5. `test-report.md:32` "1-8 全过"覆盖过满（Minor）→ 接受：结论收敛，补小视口/pointercancel/扩展性验证。
+
+**整改与合并**：派 codex 整改（同分支 feat/t1-foundation，不合并）→ 复审 → 合并 main → 开 T2/T3/T4。
