@@ -7,6 +7,7 @@
 - **拥有并可改**：新增 `src/apps/calculator/`、增强 `src/apps/settings/`、增强 `src/apps/textedit/`；`registry.ts`（加 calculator 一行注册）；新增 `src/components/Spotlight.tsx` + 在 app 根（`src/App.tsx` 或等价挂载点）挂 Spotlight overlay + 全局 Cmd+Space 监听。
 - **谨慎改**：`MenuBar.tsx` 仅在需要把 Spotlight 图标接上打开逻辑时最小改动（若 T3 已接好则复用）。改前看最新 main。
 - **不改**：Finder（T2）、widgets/控制中心（T3）的目录。
+- **证据目录**：`docs/artifacts/t4-<日期>/`（截图+报告）为**允许且要求**的交付物——所有权边界仅约束共享代码，ticket 专属证据目录不构成越界。
 
 ## 验收标准
 1. **计算器**：标准布局（数字 + 四则 + 清除 + 正负 + 百分比 + 小数点），点击/键盘输入真实计算，连续运算正确，除零给合理提示。玻璃风格。
