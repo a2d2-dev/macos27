@@ -10,6 +10,7 @@ export const previewApp: AppDefinition = {
   id: 'preview',
   title: 'Preview',
   icon: Image,
+  iconGradient: 'from-cyan-200 via-sky-400 to-blue-500',
   defaultWindow: {
     width: 600,
     height: 420,

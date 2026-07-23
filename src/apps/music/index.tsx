@@ -10,6 +10,7 @@ export const musicApp: AppDefinition = {
   id: 'music',
   title: 'Music',
   icon: Music,
+  iconGradient: 'from-rose-400 via-pink-500 to-fuchsia-600',
   defaultWindow: {
     width: 560,
     height: 360,

@@ -6,6 +6,7 @@ export const notesApp: AppDefinition = {
   id: 'notes',
   title: 'Notes',
   icon: StickyNote,
+  iconGradient: 'from-yellow-200 via-amber-300 to-orange-400',
   defaultWindow: {
     width: 520,
     height: 380,

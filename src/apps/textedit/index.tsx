@@ -10,6 +10,7 @@ export const textEditApp: AppDefinition = {
   id: 'textedit',
   title: 'TextEdit',
   icon: FileText,
+  iconGradient: 'from-emerald-200 via-teal-400 to-cyan-500',
   defaultWindow: {
     width: 500,
     height: 360,

@@ -16,7 +16,7 @@
 - 图标：lucide-react（或内联 SVG）
 
 ## 架构原则
-- **App 插件化注册表**：每个 app 是 `src/apps/<name>/` 自包含目录，导出一个 `AppDefinition`（id、标题、图标、默认窗口尺寸、React 组件），在 `src/apps/registry.ts` 的数组里注册**一行**。新增 app 不改窗口管理器代码，冲突面仅限注册数组。
+- **App 插件化注册表**：每个 app 是 `src/apps/<name>/` 自包含目录，导出一个 `AppDefinition`（id、标题、图标、Dock 图标渐变、默认窗口尺寸、React 组件），在 `src/apps/registry.ts` 的数组里注册**一行**。新增 app 不改窗口管理器或 Dock 通用层代码，冲突面仅限注册数组。
 - **窗口管理器**是通用容器：不感知具体 app 内容，只管拖拽/缩放/焦点/最小化/z-order。
 - 系统状态（主题 light/dark、壁纸、时钟、控制中心开关、Dock 运行态）集中在 `useSystemStore`。
 

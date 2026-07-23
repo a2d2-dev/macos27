@@ -1,4 +1,4 @@
-import type { PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 import type { AppDefinition } from '../apps/types';
 import type { AppWindow, WindowFrame } from '../store/windowStore';
 import { useWindowStore } from '../store/windowStore';
@@ -22,15 +22,18 @@ function clamp(value: number, min: number, max: number) {
 function clampFrame(frame: WindowFrame, minWidth: number, minHeight: number): WindowFrame {
   const viewportWidth = globalThis.innerWidth || 1280;
   const viewportHeight = globalThis.innerHeight || 800;
-  const maxWidth = Math.max(minWidth, viewportWidth - minViewportMargin * 2);
-  const maxHeight = Math.max(minHeight, viewportHeight - menuBarHeight - dockReserve);
-  const width = clamp(frame.width, minWidth, maxWidth);
-  const height = clamp(frame.height, minHeight, maxHeight);
-  const maxY = Math.max(menuBarHeight + minViewportMargin, viewportHeight - height - minViewportMargin);
+  const topLimit = menuBarHeight + minViewportMargin;
+  const bottomLimit = viewportHeight - dockReserve - minViewportMargin;
+  const maxWidth = Math.max(1, viewportWidth - minViewportMargin * 2);
+  const maxHeight = Math.max(1, bottomLimit - topLimit);
+  const width = clamp(frame.width, Math.min(minWidth, maxWidth), maxWidth);
+  const height = clamp(frame.height, Math.min(minHeight, maxHeight), maxHeight);
+  const maxX = Math.max(minViewportMargin, viewportWidth - width - minViewportMargin);
+  const maxY = Math.max(topLimit, bottomLimit - height);
 
   return {
-    x: clamp(frame.x, minViewportMargin, viewportWidth - width - minViewportMargin),
-    y: clamp(frame.y, menuBarHeight + minViewportMargin, maxY),
+    x: clamp(frame.x, minViewportMargin, maxX),
+    y: clamp(frame.y, topLimit, maxY),
     width,
     height,
   };
@@ -82,6 +85,8 @@ function resizeFrame(
 }
 
 export function WindowShell({ app, window, isActive }: WindowShellProps) {
+  const interactionCleanupRef = useRef<(() => void) | null>(null);
+  const activeInteractionRef = useRef<'drag' | 'resize' | null>(null);
   const closeWindow = useWindowStore((state) => state.closeWindow);
   const minimizeWindow = useWindowStore((state) => state.minimizeWindow);
   const toggleMaximizeWindow = useWindowStore((state) => state.toggleMaximizeWindow);
@@ -89,15 +94,30 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
   const updateWindowFrame = useWindowStore((state) => state.updateWindowFrame);
   const AppComponent = app.Component;
 
+  const clearActiveInteraction = () => {
+    interactionCleanupRef.current?.();
+  };
+
+  useEffect(
+    () => () => {
+      interactionCleanupRef.current?.();
+      interactionCleanupRef.current = null;
+      activeInteractionRef.current = null;
+    },
+    [],
+  );
+
   const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.button !== 0 || window.maximized) {
       return;
     }
 
+    clearActiveInteraction();
     focusWindow(window.id);
     const startX = event.clientX;
     const startY = event.clientY;
     const startFrame = window.frame;
+    activeInteractionRef.current = 'drag';
 
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const nextFrame = clampFrame(
@@ -115,10 +135,16 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
     const endDrag = () => {
       globalThis.removeEventListener('pointermove', handlePointerMove);
       globalThis.removeEventListener('pointerup', endDrag);
+      globalThis.removeEventListener('pointercancel', endDrag);
+      interactionCleanupRef.current = null;
+      activeInteractionRef.current = null;
     };
+
+    interactionCleanupRef.current = endDrag;
 
     globalThis.addEventListener('pointermove', handlePointerMove);
     globalThis.addEventListener('pointerup', endDrag);
+    globalThis.addEventListener('pointercancel', endDrag);
   };
 
   const beginResize = (direction: ResizeDirection) => (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -126,12 +152,14 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
       return;
     }
 
+    clearActiveInteraction();
     event.preventDefault();
     event.stopPropagation();
     focusWindow(window.id);
     const startX = event.clientX;
     const startY = event.clientY;
     const startFrame = window.frame;
+    activeInteractionRef.current = 'resize';
 
     const handlePointerMove = (moveEvent: PointerEvent) => {
       updateWindowFrame(
@@ -150,10 +178,16 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
     const endResize = () => {
       globalThis.removeEventListener('pointermove', handlePointerMove);
       globalThis.removeEventListener('pointerup', endResize);
+      globalThis.removeEventListener('pointercancel', endResize);
+      interactionCleanupRef.current = null;
+      activeInteractionRef.current = null;
     };
+
+    interactionCleanupRef.current = endResize;
 
     globalThis.addEventListener('pointermove', handlePointerMove);
     globalThis.addEventListener('pointerup', endResize);
+    globalThis.addEventListener('pointercancel', endResize);
   };
 
   return (

@@ -34,6 +34,7 @@ type WindowState = {
 const menuBarHeight = 28;
 const dockReserve = 102;
 const defaultZ = 100;
+const maximizedViewportMargin = 10;
 
 function nextZ(windows: AppWindow[]) {
   return windows.reduce((highest, window) => Math.max(highest, window.zIndex), defaultZ) + 1;
@@ -59,6 +60,18 @@ function getActiveAppId(windows: AppWindow[], activeWindowId: string | null) {
   }
 
   return windows.find((window) => window.id === activeWindowId)?.appId ?? 'finder';
+}
+
+function maximizedFrame(): WindowFrame {
+  const viewportWidth = typeof window === 'undefined' ? 1280 : window.innerWidth;
+  const viewportHeight = typeof window === 'undefined' ? 800 : window.innerHeight;
+
+  return {
+    x: maximizedViewportMargin,
+    y: menuBarHeight,
+    width: Math.max(1, viewportWidth - maximizedViewportMargin * 2),
+    height: Math.max(1, viewportHeight - menuBarHeight - dockReserve),
+  };
 }
 
 export const useWindowStore = create<WindowState>((set) => ({
@@ -151,12 +164,7 @@ export const useWindowStore = create<WindowState>((set) => ({
 
         return {
           ...window,
-          frame: {
-            x: 10,
-            y: menuBarHeight + 10,
-            width: Math.max(720, globalThis.innerWidth - 20),
-            height: Math.max(460, globalThis.innerHeight - menuBarHeight - dockReserve),
-          },
+          frame: maximizedFrame(),
           restoreFrame: window.frame,
           maximized: true,
           minimized: false,

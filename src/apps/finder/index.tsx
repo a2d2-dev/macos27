@@ -15,6 +15,7 @@ export const finderApp: AppDefinition = {
   id: 'finder',
   title: 'Finder',
   icon: Folder,
+  iconGradient: 'from-sky-400 via-blue-500 to-indigo-600',
   defaultWindow: {
     width: 680,
     height: 440,

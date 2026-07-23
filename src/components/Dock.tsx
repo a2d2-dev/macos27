@@ -2,15 +2,6 @@ import { useMemo, useState } from 'react';
 import { apps } from '../apps/registry';
 import { useWindowStore } from '../store/windowStore';
 
-const iconThemes: Record<string, string> = {
-  finder: 'from-sky-400 via-blue-500 to-indigo-600',
-  notes: 'from-yellow-200 via-amber-300 to-orange-400',
-  preview: 'from-cyan-200 via-sky-400 to-blue-500',
-  music: 'from-rose-400 via-pink-500 to-fuchsia-600',
-  settings: 'from-slate-200 via-slate-400 to-slate-600',
-  textedit: 'from-emerald-200 via-teal-400 to-cyan-500',
-};
-
 function scaleForDistance(distance: number | null) {
   if (distance === null) {
     return 1;
@@ -64,7 +55,7 @@ export function Dock() {
               onClick={() => openApp(app)}
             >
               <span
-                className={`grid h-[54px] w-[54px] place-items-center rounded-[17px] bg-gradient-to-br ${iconThemes[app.id]} text-white shadow-lg ring-1 ring-white/45`}
+                className={`grid h-[54px] w-[54px] place-items-center rounded-[17px] bg-gradient-to-br ${app.iconGradient} text-white shadow-lg ring-1 ring-white/45`}
               >
                 <Icon size={29} strokeWidth={2.15} />
               </span>

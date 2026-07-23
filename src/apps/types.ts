@@ -5,6 +5,7 @@ export type AppDefinition = {
   id: string;
   title: string;
   icon: LucideIcon;
+  iconGradient: string;
   defaultWindow: {
     width: number;
     height: number;

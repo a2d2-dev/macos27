@@ -15,6 +15,7 @@ export const settingsApp: AppDefinition = {
   id: 'settings',
   title: 'Settings',
   icon: Settings,
+  iconGradient: 'from-slate-200 via-slate-400 to-slate-600',
   defaultWindow: {
     width: 620,
     height: 430,
