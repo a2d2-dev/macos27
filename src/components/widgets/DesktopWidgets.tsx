@@ -31,6 +31,9 @@ const marketTrend = [18, 22, 21, 27, 25, 31, 30, 36, 34, 39, 42, 40];
 const widgetSurfaceClass =
   'border border-white/35 bg-white/[0.24] text-[var(--text-primary)] ring-1 ring-white/20 shadow-[0_1px_2px_rgba(0,0,0,0.08),0_18px_48px_rgba(15,23,42,0.18),inset_0_1px_0_rgba(255,255,255,0.38)] backdrop-blur-[22px] backdrop-saturate-[1.8] [.theme-dark_&]:border-white/[0.16] [.theme-dark_&]:bg-slate-950/[0.28] [.theme-dark_&]:ring-white/[0.08] [.theme-dark_&]:shadow-[0_1px_2px_rgba(0,0,0,0.22),0_20px_52px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.14)]';
 const dividerClass = 'border-white/28 [.theme-dark_&]:border-white/10';
+// Below 694px tall, the stacked column can no longer keep a 12px gap above the Dock.
+const widgetsRailClass =
+  'pointer-events-none fixed left-3 top-10 z-[6] grid grid-cols-2 gap-3 antialiased [@media(max-height:693px)]:grid-cols-4';
 
 function buildSparklinePath(points: readonly number[], width: number, height: number) {
   const min = Math.min(...points);
@@ -200,7 +203,7 @@ function StocksWidget() {
 
 export function DesktopWidgets() {
   return (
-    <aside className="pointer-events-none fixed left-3 top-10 z-[6] grid grid-cols-2 gap-3 antialiased" aria-label="Desktop widgets">
+    <aside className={widgetsRailClass} aria-label="Desktop widgets">
       <CalendarWidget />
       <WeatherWidget />
       <TodayRemindersWidget />
