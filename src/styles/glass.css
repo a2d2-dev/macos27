@@ -1,10 +1,12 @@
 :root {
   --glass-bg: rgba(255, 255, 255, 0.42);
   --glass-bg-strong: rgba(255, 255, 255, 0.62);
-  --glass-border: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-highlight: rgba(255, 255, 255, 0.6);
   --glass-titlebar: rgba(255, 255, 255, 0.5);
   --glass-titlebar-inactive: rgba(238, 242, 247, 0.56);
   --glass-shadow: 0 22px 70px rgba(15, 23, 42, 0.24);
+  --hairline: rgba(15, 23, 42, 0.08);
   --text-primary: rgba(15, 23, 42, 0.92);
   --text-secondary: rgba(51, 65, 85, 0.76);
   --desktop-vignette: rgba(255, 255, 255, 0.22);
@@ -13,10 +15,12 @@
 .theme-dark {
   --glass-bg: rgba(8, 14, 28, 0.44);
   --glass-bg-strong: rgba(12, 18, 34, 0.66);
-  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.16);
   --glass-titlebar: rgba(20, 28, 46, 0.58);
   --glass-titlebar-inactive: rgba(23, 31, 48, 0.44);
   --glass-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+  --hairline: rgba(255, 255, 255, 0.1);
   --text-primary: rgba(248, 250, 252, 0.94);
   --text-secondary: rgba(226, 232, 240, 0.72);
   --desktop-vignette: rgba(1, 6, 18, 0.2);
@@ -25,7 +29,7 @@
 .glass-surface {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-highlight);
   backdrop-filter: blur(30px) saturate(180%);
   -webkit-backdrop-filter: blur(30px) saturate(180%);
 }
@@ -33,7 +37,7 @@
 .glass-surface-strong {
   background: var(--glass-bg-strong);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-highlight);
   backdrop-filter: blur(34px) saturate(190%);
   -webkit-backdrop-filter: blur(34px) saturate(190%);
 }

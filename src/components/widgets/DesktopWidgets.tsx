@@ -45,7 +45,7 @@ function CalendarWidget() {
   return (
     <section className="glass-surface w-[172px] rounded-2xl px-3 pb-3 pt-3 text-[var(--text-primary)]" aria-label="Calendar widget">
       <h2 className="mb-2 text-[13px] font-semibold text-red-500">{monthLabel}</h2>
-      <div className="grid grid-cols-7 gap-y-1 text-center text-[10px] leading-5 text-[var(--text-secondary)]">
+      <div className="grid grid-cols-7 gap-y-1 text-center text-[10px] leading-5 tabular-nums text-[var(--text-secondary)]">
         {weekdays.map((day, index) => (
           <span key={`${day}-${index}`} className="h-5">
             {day}
@@ -72,7 +72,7 @@ function WeatherWidget() {
       <h2 className="text-[13px] font-semibold">{weather.city}</h2>
       <div className="mt-3 flex items-center gap-3">
         <CloudSun size={34} className="text-yellow-400 drop-shadow" strokeWidth={2.2} />
-        <span className="text-[34px] font-light leading-none">{weather.temperature}</span>
+        <span className="text-[34px] font-light leading-none tabular-nums">{weather.temperature}</span>
       </div>
       <div className="mt-3 text-[11px] leading-4 text-[var(--text-secondary)]">
         <p>{weather.condition}</p>
@@ -96,14 +96,14 @@ function StocksWidget() {
           const isUp = stock.change.startsWith('+');
 
           return (
-            <div key={stock.symbol} className="grid grid-cols-[1fr_auto] gap-x-2 border-t border-white/25 pt-2 first:border-t-0 first:pt-0">
+            <div key={stock.symbol} className="grid grid-cols-[1fr_auto] gap-x-2 border-t border-[var(--hairline)] pt-2 first:border-t-0 first:pt-0">
               <div className="min-w-0">
                 <p className="text-[13px] font-semibold leading-4">{stock.symbol}</p>
                 <p className="truncate text-[10px] leading-4 text-[var(--text-secondary)]">{stock.name}</p>
               </div>
               <div className="text-right">
-                <p className="text-[12px] leading-4">{stock.price}</p>
-                <p className={`text-[10px] leading-4 ${isUp ? 'text-emerald-600' : 'text-red-500'}`}>{stock.change}</p>
+                <p className="text-[12px] leading-4 tabular-nums">{stock.price}</p>
+                <p className={`text-[10px] leading-4 tabular-nums ${isUp ? 'text-emerald-600' : 'text-red-500'}`}>{stock.change}</p>
               </div>
             </div>
           );
