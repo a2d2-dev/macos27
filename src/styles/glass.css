@@ -6,6 +6,11 @@
   --glass-titlebar: rgba(255, 255, 255, 0.5);
   --glass-titlebar-inactive: rgba(238, 242, 247, 0.56);
   --glass-shadow: 0 22px 70px rgba(15, 23, 42, 0.24);
+  --menubar-bg: rgba(255, 255, 255, 0.14);
+  --menubar-border: rgba(255, 255, 255, 0.14);
+  --menubar-shadow: 0 1px 10px rgba(15, 23, 42, 0.04);
+  --menubar-control-hover: rgba(255, 255, 255, 0.2);
+  --menubar-control-active: rgba(255, 255, 255, 0.28);
   --hairline: rgba(15, 23, 42, 0.08);
   --text-primary: rgba(15, 23, 42, 0.92);
   --text-secondary: rgba(51, 65, 85, 0.76);
@@ -20,6 +25,11 @@
   --glass-titlebar: rgba(20, 28, 46, 0.58);
   --glass-titlebar-inactive: rgba(23, 31, 48, 0.44);
   --glass-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+  --menubar-bg: rgba(16, 18, 22, 0.16);
+  --menubar-border: rgba(255, 255, 255, 0.08);
+  --menubar-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
+  --menubar-control-hover: rgba(255, 255, 255, 0.12);
+  --menubar-control-active: rgba(255, 255, 255, 0.18);
   --hairline: rgba(255, 255, 255, 0.1);
   --text-primary: rgba(248, 250, 252, 0.94);
   --text-secondary: rgba(226, 232, 240, 0.72);
@@ -51,4 +61,12 @@
 
 .glass-titlebar[data-active='false'] {
   background: var(--glass-titlebar-inactive);
+}
+
+.glass-menubar {
+  background: var(--menubar-bg);
+  border-bottom: 1px solid var(--menubar-border);
+  box-shadow: var(--menubar-shadow);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
 }
