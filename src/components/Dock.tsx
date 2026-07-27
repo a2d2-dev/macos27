@@ -46,16 +46,19 @@ export function Dock() {
               key={app.id}
               type="button"
               aria-label={`Open ${app.title}`}
-              className="dock-fisheye relative flex h-[54px] w-[54px] origin-bottom flex-col items-center justify-end rounded-[17px] outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+              className="relative flex h-[54px] w-[54px] flex-col items-center justify-end rounded-[17px] outline-none focus-visible:ring-2 focus-visible:ring-white/75"
               style={{
-                transform: `scale(${scale}) translateY(${hoveredIndex === index ? '-8px' : '0px'})`,
                 marginInline: hoveredIndex === null ? 0 : `${Math.max(0, scale - 1) * 10}px`,
+                transition: 'margin 170ms ease',
               }}
               onMouseEnter={() => setHoveredIndex(index)}
               onClick={() => openApp(app)}
             >
               <span
-                className={`grid h-[54px] w-[54px] place-items-center rounded-[17px] bg-gradient-to-br ${app.iconGradient} text-white shadow-lg ring-1 ring-white/45`}
+                className={`dock-fisheye pointer-events-none grid h-[54px] w-[54px] origin-bottom place-items-center rounded-[17px] bg-gradient-to-br ${app.iconGradient} text-white shadow-lg ring-1 ring-white/45`}
+                style={{
+                  transform: `scale(${scale}) translateY(${hoveredIndex === index ? '-8px' : '0px'})`,
+                }}
               >
                 <Icon size={29} strokeWidth={2.15} />
               </span>
