@@ -66,6 +66,11 @@ const mockFileSystem = folder('root', 'Macintosh HD', 'hard-drive', 'Today, 9:00
     file('music-app', 'Music.app', 'Application', 127_000_000, 'app', 'Fri, 1:08 PM'),
   ]),
   folder('desktop', 'Desktop', 'desktop', 'Today, 8:52 AM', [
+    folder('desktop-tahoe-trip', 'Tahoe Trip', 'folder', 'Today, 8:58 AM', [
+      file('tahoe-trip-itinerary', 'Itinerary.txt', 'Plain Text', 22_000, 'text', 'Today, 8:58 AM'),
+      file('tahoe-trip-viewpoints', 'Viewpoints.md', 'Markdown Document', 36_000, 'text', 'Today, 8:55 AM'),
+    ]),
+    file('desktop-welcome', 'Welcome.txt', 'Plain Text', 14_000, 'text', 'Today, 8:57 AM'),
     folder('desktop-mockups', 'Mockups', 'folder', 'Today, 8:52 AM', [
       file('mockups-finder-grid', 'Finder Grid.png', 'PNG Image', 3_600_000, 'image', 'Today, 8:51 AM'),
       file('mockups-sidebar-study', 'Sidebar Study.png', 'PNG Image', 2_940_000, 'image', 'Today, 8:45 AM'),
