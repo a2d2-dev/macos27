@@ -208,28 +208,40 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
         data-active={isActive}
         onPointerDown={beginDrag}
       >
-        <div className="absolute left-4 top-1/2 flex -translate-y-1/2 gap-2">
+        <div className="traffic-lights group absolute left-4 top-1/2 flex -translate-y-1/2 gap-2">
           <button
             type="button"
             aria-label={`Close ${window.title}`}
-            className="h-3.5 w-3.5 rounded-full bg-[#ff5f57] shadow-inner ring-1 ring-black/10"
+            className="grid h-3 w-3 place-items-center rounded-full bg-[#ff5f57] ring-1 ring-black/10"
             onPointerDown={(event) => event.stopPropagation()}
             onClick={() => closeWindow(window.id)}
-          />
+          >
+            <svg viewBox="0 0 12 12" aria-hidden="true" className="h-2 w-2 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+              <path d="M3.6 3.6l4.8 4.8M8.4 3.6l-4.8 4.8" stroke="rgba(0,0,0,0.5)" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>
+          </button>
           <button
             type="button"
             aria-label={`Minimize ${window.title}`}
-            className="h-3.5 w-3.5 rounded-full bg-[#febc2e] shadow-inner ring-1 ring-black/10"
+            className="grid h-3 w-3 place-items-center rounded-full bg-[#febc2e] ring-1 ring-black/10"
             onPointerDown={(event) => event.stopPropagation()}
             onClick={() => minimizeWindow(window.id)}
-          />
+          >
+            <svg viewBox="0 0 12 12" aria-hidden="true" className="h-2 w-2 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+              <path d="M3 6h6" stroke="rgba(0,0,0,0.55)" strokeWidth="1.3" strokeLinecap="round" />
+            </svg>
+          </button>
           <button
             type="button"
             aria-label={`${window.maximized ? 'Restore' : 'Maximize'} ${window.title}`}
-            className="h-3.5 w-3.5 rounded-full bg-[#28c840] shadow-inner ring-1 ring-black/10"
+            className="grid h-3 w-3 place-items-center rounded-full bg-[#28c840] ring-1 ring-black/10"
             onPointerDown={(event) => event.stopPropagation()}
             onClick={() => toggleMaximizeWindow(window.id)}
-          />
+          >
+            <svg viewBox="0 0 12 12" aria-hidden="true" className="h-[9px] w-[9px] opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+              <path d="M4 8.2V4.4h3.8z M8 3.8v3.8H4.2z" fill="rgba(0,0,0,0.5)" />
+            </svg>
+          </button>
         </div>
         <div className={`text-sm font-semibold ${isActive ? 'opacity-90' : 'opacity-[0.48]'}`}>{window.title}</div>
       </div>

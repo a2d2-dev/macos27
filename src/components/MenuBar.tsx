@@ -22,7 +22,6 @@ function formatClock(date: Date) {
     day: 'numeric',
     hour: 'numeric',
     minute: '2-digit',
-    second: '2-digit',
   }).format(date);
 }
 
@@ -146,7 +145,7 @@ export function MenuBar({ onOpenSpotlight }: MenuBarProps) {
           <Search size={15} />
         </button>
         <Sparkles size={15} aria-label="Siri" className="text-fuchsia-400" />
-        <time dateTime={now.toISOString()}>{formatClock(now)}</time>
+        <time dateTime={now.toISOString()} className="tabular-nums">{formatClock(now)}</time>
       </div>
       <ControlCenter />
     </header>
