@@ -6,6 +6,10 @@
   --glass-titlebar: rgba(255, 255, 255, 0.5);
   --glass-titlebar-inactive: rgba(238, 242, 247, 0.56);
   --glass-shadow: 0 22px 70px rgba(15, 23, 42, 0.24);
+  --window-bg: rgba(255, 255, 255, 0.66);
+  --window-radius: 16px;
+  --window-shadow: 0 10px 34px rgba(15, 23, 42, 0.12), 0 38px 110px rgba(15, 23, 42, 0.22);
+  --window-toolbar-bg: rgba(248, 250, 252, 0.58);
   --menubar-bg: rgba(255, 255, 255, 0.14);
   --menubar-border: rgba(255, 255, 255, 0.14);
   --menubar-shadow: 0 1px 10px rgba(15, 23, 42, 0.04);
@@ -25,6 +29,10 @@
   --glass-titlebar: rgba(20, 28, 46, 0.58);
   --glass-titlebar-inactive: rgba(23, 31, 48, 0.44);
   --glass-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+  --window-bg: rgba(20, 24, 31, 0.7);
+  --window-radius: 16px;
+  --window-shadow: 0 12px 38px rgba(0, 0, 0, 0.34), 0 42px 120px rgba(0, 0, 0, 0.44);
+  --window-toolbar-bg: rgba(28, 32, 40, 0.62);
   --menubar-bg: rgba(16, 18, 22, 0.16);
   --menubar-border: rgba(255, 255, 255, 0.08);
   --menubar-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
@@ -61,6 +69,22 @@
 
 .glass-titlebar[data-active='false'] {
   background: var(--glass-titlebar-inactive);
+}
+
+.glass-window {
+  background: var(--window-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--window-radius);
+  box-shadow: var(--window-shadow), inset 0 1px 0 0 var(--glass-highlight);
+  backdrop-filter: blur(34px) saturate(190%);
+  -webkit-backdrop-filter: blur(34px) saturate(190%);
+}
+
+.glass-window-toolbar {
+  background: var(--window-toolbar-bg);
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
 }
 
 .glass-menubar {

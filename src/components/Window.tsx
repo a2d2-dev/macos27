@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useRef, type ComponentType, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 import { createPortal } from 'react-dom';
 import type { AppDefinition } from '../apps/types';
 import type { AppWindow, WindowFrame } from '../store/windowStore';
@@ -8,6 +8,10 @@ type WindowShellProps = {
   app: AppDefinition;
   window: AppWindow;
   isActive: boolean;
+};
+
+type AppWithWindowToolbar = AppDefinition & {
+  WindowToolbar?: ComponentType;
 };
 
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
@@ -153,6 +157,7 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
   const focusWindow = useWindowStore((state) => state.focusWindow);
   const updateWindowFrame = useWindowStore((state) => state.updateWindowFrame);
   const AppComponent = app.Component;
+  const ToolbarComponent = (app as AppWithWindowToolbar).WindowToolbar;
   const resizePortalRoot = typeof document === 'undefined' ? null : document.body;
 
   const clearActiveInteraction = () => {
@@ -262,7 +267,7 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
   return (
     <>
       <article
-        className="glass-surface-strong absolute overflow-hidden rounded-[18px] text-[var(--text-primary)]"
+        className="glass-window absolute flex flex-col overflow-hidden text-[var(--text-primary)]"
         style={{
           left: window.frame.x,
           top: window.frame.y,
@@ -274,7 +279,7 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
         aria-label={`${window.title} window`}
       >
         <div
-          className="glass-titlebar flex h-10 cursor-move select-none items-center justify-center px-4"
+          className="glass-titlebar flex h-9 shrink-0 cursor-move select-none items-center justify-center px-4"
           data-active={isActive}
           onPointerDown={beginDrag}
         >
@@ -316,7 +321,13 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
           <div className={`text-sm font-semibold ${isActive ? 'opacity-90' : 'opacity-[0.48]'}`}>{window.title}</div>
         </div>
 
-        <div className="h-[calc(100%-2.5rem)] overflow-hidden">
+        {ToolbarComponent ? (
+          <div className="glass-window-toolbar flex h-12 shrink-0 items-center px-4">
+            <ToolbarComponent />
+          </div>
+        ) : null}
+
+        <div className="min-h-0 flex-1 overflow-hidden">
           <AppComponent />
         </div>
 
