@@ -2,7 +2,7 @@ import { useEffect, useRef, type ComponentType, type CSSProperties, type Pointer
 import { createPortal } from 'react-dom';
 import type { AppDefinition } from '../apps/types';
 import type { AppWindow, WindowFrame } from '../store/windowStore';
-import { useWindowStore } from '../store/windowStore';
+import { clampFrame, useWindowStore } from '../store/windowStore';
 
 type WindowShellProps = {
   app: AppDefinition;
@@ -16,9 +16,6 @@ type AppWithWindowToolbar = AppDefinition & {
 
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
 
-const menuBarHeight = 28;
-const dockReserve = 102;
-const minViewportMargin = 8;
 const activeWindowResizeZIndex = 9100;
 
 type ResizeHandleSpec = {
@@ -78,30 +75,6 @@ const resizeHandleSpecs: ResizeHandleSpec[] = [
     fixedStyle: (frame) => ({ left: frame.x, top: frame.y + frame.height - 20, width: 20, height: 20 }),
   },
 ];
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function clampFrame(frame: WindowFrame, minWidth: number, minHeight: number): WindowFrame {
-  const viewportWidth = globalThis.innerWidth || 1280;
-  const viewportHeight = globalThis.innerHeight || 800;
-  const topLimit = menuBarHeight + minViewportMargin;
-  const bottomLimit = viewportHeight - dockReserve - minViewportMargin;
-  const maxWidth = Math.max(1, viewportWidth - minViewportMargin * 2);
-  const maxHeight = Math.max(1, bottomLimit - topLimit);
-  const width = clamp(frame.width, Math.min(minWidth, maxWidth), maxWidth);
-  const height = clamp(frame.height, Math.min(minHeight, maxHeight), maxHeight);
-  const maxX = Math.max(minViewportMargin, viewportWidth - width - minViewportMargin);
-  const maxY = Math.max(topLimit, bottomLimit - height);
-
-  return {
-    x: clamp(frame.x, minViewportMargin, maxX),
-    y: clamp(frame.y, topLimit, maxY),
-    width,
-    height,
-  };
-}
 
 function resizeFrame(
   startFrame: WindowFrame,

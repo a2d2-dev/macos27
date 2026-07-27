@@ -12,7 +12,7 @@ import {
   Volume2,
   Wifi,
 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import type { ControlCenterToggleId } from '../store/systemStore';
 import { useSystemStore } from '../store/systemStore';
 
@@ -122,7 +122,6 @@ function Switch({
 
 export function ControlCenter() {
   const panelRef = useRef<HTMLDivElement>(null);
-  const [lowPowerMode, setLowPowerMode] = useState(false);
   const isOpen = useSystemStore((state) => state.isControlCenterOpen);
   const closeControlCenter = useSystemStore((state) => state.closeControlCenter);
   const theme = useSystemStore((state) => state.theme);
@@ -132,6 +131,7 @@ export function ControlCenter() {
   const volume = useSystemStore((state) => state.volume);
   const setVolume = useSystemStore((state) => state.setVolume);
   const nightShift = useSystemStore((state) => state.controlCenterToggles.nightShift);
+  const lowPowerMode = useSystemStore((state) => state.controlCenterToggles.lowPowerMode);
   const toggleSetting = useSystemStore((state) => state.toggleControlCenterSetting);
   const batteryLevel = useSystemStore((state) => state.batteryLevel);
 
@@ -241,7 +241,7 @@ export function ControlCenter() {
           <Switch
             checked={lowPowerMode}
             label="Low Power Mode"
-            onChange={() => setLowPowerMode((enabled) => !enabled)}
+            onChange={() => toggleSetting('lowPowerMode')}
           />
         </div>
       </section>
