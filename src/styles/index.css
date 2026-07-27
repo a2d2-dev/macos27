@@ -18,7 +18,7 @@ body {
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
   color: var(--text-primary);
-  background: #89d3ff;
+  background: #345d79;
 }
 
 button,
@@ -32,29 +32,51 @@ button {
 }
 
 .desktop-wallpaper {
-  background:
-    radial-gradient(circle at 30% 78%, rgba(255, 255, 255, 0.68) 0 12%, transparent 32%),
-    radial-gradient(circle at 76% 28%, rgba(108, 201, 255, 0.75) 0 18%, transparent 38%),
-    radial-gradient(circle at 52% 68%, rgba(94, 164, 216, 0.7) 0 18%, transparent 36%),
-    linear-gradient(165deg, rgba(225, 250, 255, 0.94) 0%, rgba(132, 212, 255, 0.95) 22%, rgba(52, 129, 207, 0.92) 48%, rgba(28, 86, 160, 0.98) 74%, rgba(11, 38, 94, 1) 100%);
+  isolation: isolate;
+  background-color: #345d79;
+  background-size: cover;
+  background-position: center 55%;
+  background-repeat: no-repeat;
+}
+
+.wallpaper-tahoe {
+  background-image: url('../assets/tahoe-aerial-wallpaper.jpg');
 }
 
 .desktop-wallpaper::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   background:
-    linear-gradient(145deg, transparent 0 42%, rgba(255, 255, 255, 0.48) 42.4% 43.3%, transparent 44%),
-    linear-gradient(23deg, transparent 0 47%, rgba(14, 61, 123, 0.34) 47.3% 56%, transparent 56.5%),
-    radial-gradient(ellipse at 52% 92%, rgba(4, 25, 72, 0.48) 0 18%, transparent 44%);
-  opacity: 0.78;
+    radial-gradient(ellipse at 20% 18%, rgba(255, 255, 255, 0.18), transparent 38%),
+    radial-gradient(ellipse at 82% 86%, rgba(3, 29, 64, 0.18), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(2, 18, 38, 0.16));
+  pointer-events: none;
 }
 
 .desktop-wallpaper::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, var(--desktop-vignette), rgba(0, 0, 0, 0.18));
+  z-index: 0;
+  background:
+    linear-gradient(180deg, var(--desktop-vignette), rgba(0, 0, 0, 0.12)),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
+}
+
+.theme-dark.desktop-wallpaper::before {
+  background:
+    radial-gradient(ellipse at 28% 20%, rgba(95, 132, 172, 0.12), transparent 34%),
+    radial-gradient(ellipse at 78% 88%, rgba(0, 0, 0, 0.34), transparent 46%),
+    linear-gradient(180deg, rgba(1, 6, 18, 0.4), rgba(1, 8, 22, 0.56));
+}
+
+.theme-dark.desktop-wallpaper::after {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.32)),
+    radial-gradient(ellipse at center, transparent 48%, rgba(0, 0, 0, 0.34) 100%);
 }
 
 .wallpaper-aurora {
@@ -78,4 +100,158 @@ button {
 .resize-handle {
   position: absolute;
   z-index: 20;
+}
+
+[aria-label='Window manager'] {
+  pointer-events: none;
+}
+
+[aria-label='Window manager'] > * {
+  pointer-events: auto;
+}
+
+.desktop-icons-layer {
+  position: fixed;
+  top: 58px;
+  right: 28px;
+  z-index: 7;
+  display: grid;
+  width: 86px;
+  gap: 16px;
+}
+
+.desktop-icon {
+  display: flex;
+  min-height: 86px;
+  width: 86px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  padding: 5px 3px 6px;
+  color: white;
+  outline: none;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75), 0 0 8px rgba(0, 0, 0, 0.38);
+}
+
+.desktop-icon:hover,
+.desktop-icon:focus-visible,
+.desktop-icon.is-selected {
+  background: rgba(0, 113, 227, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.desktop-icon:focus-visible {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 0 0 2px rgba(0, 113, 227, 0.72);
+}
+
+.desktop-icon__glyph {
+  position: relative;
+  display: block;
+  height: 50px;
+  width: 52px;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.32));
+}
+
+.desktop-icon__glyph--folder::before,
+.desktop-icon__glyph--folder::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.desktop-icon__glyph--folder::before {
+  top: 6px;
+  height: 13px;
+  width: 24px;
+  border-bottom: 0;
+  border-radius: 7px 7px 3px 3px;
+  background: linear-gradient(180deg, #8ad3ff 0%, #33a7ff 100%);
+}
+
+.desktop-icon__glyph--folder::after {
+  top: 14px;
+  height: 31px;
+  width: 48px;
+  border-radius: 9px 9px 8px 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.36) 0%, transparent 42%),
+    linear-gradient(135deg, #51c3ff 0%, #0a84ff 56%, #1f5ee9 100%);
+  box-shadow: inset 0 -7px 14px rgba(0, 65, 150, 0.22);
+}
+
+.desktop-icon__glyph--text {
+  width: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, transparent 0 82%, rgba(203, 213, 225, 0.98) 82% 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(236, 242, 250, 0.98));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.desktop-icon__glyph--text::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  height: 14px;
+  width: 14px;
+  border-left: 1px solid rgba(148, 163, 184, 0.55);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.55);
+  border-radius: 0 5px 0 4px;
+  background: linear-gradient(135deg, rgba(226, 232, 240, 0.4), rgba(148, 163, 184, 0.78));
+}
+
+.desktop-icon__file-lines {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 22px;
+  display: grid;
+  gap: 5px;
+}
+
+.desktop-icon__file-lines span {
+  display: block;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(71, 85, 105, 0.62);
+}
+
+.desktop-icon__file-lines span:nth-child(2) {
+  width: 82%;
+}
+
+.desktop-icon__file-lines span:nth-child(3) {
+  width: 64%;
+}
+
+.desktop-icon__label {
+  max-width: 78px;
+  border-radius: 5px;
+  padding: 1px 5px 2px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  overflow-wrap: anywhere;
+}
+
+.desktop-icon.is-selected .desktop-icon__label {
+  background: rgba(0, 113, 227, 0.86);
+  text-shadow: none;
+}
+
+.theme-dark .desktop-icon:hover,
+.theme-dark .desktop-icon:focus-visible,
+.theme-dark .desktop-icon.is-selected {
+  background: rgba(0, 113, 227, 0.28);
 }
