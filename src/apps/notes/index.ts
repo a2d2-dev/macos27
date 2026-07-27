@@ -8,10 +8,10 @@ export const notesApp: AppDefinition = {
   icon: StickyNote,
   iconGradient: 'from-yellow-200 via-amber-300 to-orange-400',
   defaultWindow: {
-    width: 520,
-    height: 380,
-    minWidth: 340,
-    minHeight: 240,
+    width: 960,
+    height: 620,
+    minWidth: 760,
+    minHeight: 460,
   },
   Component: NotesApp,
 };
