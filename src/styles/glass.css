@@ -22,26 +22,26 @@
 }
 
 .theme-dark {
-  --glass-bg: rgba(8, 14, 28, 0.44);
-  --glass-bg-strong: rgba(12, 18, 34, 0.66);
-  --glass-border: rgba(255, 255, 255, 0.14);
-  --glass-highlight: rgba(255, 255, 255, 0.16);
-  --glass-titlebar: rgba(20, 28, 46, 0.58);
-  --glass-titlebar-inactive: rgba(23, 31, 48, 0.44);
-  --glass-shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
-  --window-bg: rgba(20, 24, 31, 0.7);
+  --glass-bg: rgba(54, 54, 56, 0.38);
+  --glass-bg-strong: rgba(44, 44, 46, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --glass-highlight: rgba(255, 255, 255, 0.14);
+  --glass-titlebar: rgba(38, 38, 40, 0.72);
+  --glass-titlebar-inactive: rgba(30, 30, 32, 0.48);
+  --glass-shadow: 0 24px 86px rgba(0, 0, 0, 0.46);
+  --window-bg: rgba(28, 28, 30, 0.76);
   --window-radius: 16px;
-  --window-shadow: 0 12px 38px rgba(0, 0, 0, 0.34), 0 42px 120px rgba(0, 0, 0, 0.44);
-  --window-toolbar-bg: rgba(28, 32, 40, 0.62);
-  --menubar-bg: rgba(16, 18, 22, 0.16);
-  --menubar-border: rgba(255, 255, 255, 0.08);
-  --menubar-shadow: 0 1px 12px rgba(0, 0, 0, 0.08);
-  --menubar-control-hover: rgba(255, 255, 255, 0.12);
-  --menubar-control-active: rgba(255, 255, 255, 0.18);
-  --hairline: rgba(255, 255, 255, 0.1);
-  --text-primary: rgba(248, 250, 252, 0.94);
-  --text-secondary: rgba(226, 232, 240, 0.72);
-  --desktop-vignette: rgba(1, 6, 18, 0.2);
+  --window-shadow: 0 12px 38px rgba(0, 0, 0, 0.4), 0 42px 120px rgba(0, 0, 0, 0.52);
+  --window-toolbar-bg: rgba(46, 46, 48, 0.62);
+  --menubar-bg: rgba(18, 18, 20, 0.1);
+  --menubar-border: rgba(255, 255, 255, 0.055);
+  --menubar-shadow: 0 1px 10px rgba(0, 0, 0, 0.06);
+  --menubar-control-hover: rgba(255, 255, 255, 0.1);
+  --menubar-control-active: rgba(255, 255, 255, 0.16);
+  --hairline: rgba(255, 255, 255, 0.095);
+  --text-primary: rgba(245, 245, 247, 0.94);
+  --text-secondary: rgba(214, 214, 218, 0.7);
+  --desktop-vignette: rgba(0, 0, 0, 0.26);
 }
 
 .glass-surface {
