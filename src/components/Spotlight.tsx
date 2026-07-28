@@ -324,7 +324,7 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
           </div>
 
           <div
-            className="flex h-[30px] shrink-0 items-center rounded-full bg-black/[0.055] p-0.5 text-[12px] font-medium text-[var(--text-secondary)] shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] [.theme-dark_&]:bg-white/10"
+            className="flex h-[30px] shrink-0 items-center rounded-full bg-black/[0.045] p-0.5 text-[12px] font-medium text-[var(--text-secondary)] shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] [.theme-dark_&]:bg-white/[0.08]"
             role="tablist"
             aria-label="Spotlight categories"
           >
@@ -339,8 +339,8 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
                   aria-selected={isActive}
                   className={`spotlight-category h-7 rounded-full px-3 outline-none transition-[background,box-shadow,color,transform] duration-200 ${
                     isActive
-                      ? 'bg-white text-[var(--text-primary)] shadow-[0_1px_3px_rgba(0,0,0,0.14)] [.theme-dark_&]:bg-white/20'
-                      : 'hover:bg-white/35 focus-visible:bg-white/45 [.theme-dark_&]:hover:bg-white/10 [.theme-dark_&]:focus-visible:bg-white/15'
+                      ? 'bg-white/75 text-[var(--text-primary)] shadow-[0_1px_3px_rgba(0,0,0,0.14)] [.theme-dark_&]:bg-white/16'
+                      : 'hover:bg-white/28 focus-visible:bg-white/36 [.theme-dark_&]:hover:bg-white/[0.08] [.theme-dark_&]:focus-visible:bg-white/12'
                   }`}
                   onMouseDown={(event) => event.preventDefault()}
                   onClick={() => {
@@ -361,7 +361,7 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
             {sectionLabel}
           </div>
           {results.length ? (
-            <div className="overflow-hidden rounded-[12px] bg-white/[0.16] ring-1 ring-white/30 [.theme-dark_&]:bg-white/[0.055] [.theme-dark_&]:ring-white/10">
+            <div className="overflow-hidden rounded-[12px] bg-white/[0.12] ring-1 ring-white/26 [.theme-dark_&]:bg-white/[0.045] [.theme-dark_&]:ring-white/10">
               {results.map((entry, index) => {
                 const Icon = entry.Icon;
                 const isSelected = index === selectedIndex;
@@ -373,7 +373,7 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
                     className={`spotlight-result flex h-11 w-full items-center gap-3 border-t border-[var(--hairline)] px-3 text-left outline-none transition-[background,box-shadow,transform] first:border-t-0 ${
                       isSelected
                         ? 'bg-[#0a84ff]/35 shadow-[inset_0_0_0_1px_rgba(10,132,255,0.18)]'
-                        : 'hover:bg-white/24 focus-visible:bg-white/28 [.theme-dark_&]:hover:bg-white/10 [.theme-dark_&]:focus-visible:bg-white/12'
+                        : 'hover:bg-white/20 focus-visible:bg-white/24 [.theme-dark_&]:hover:bg-white/[0.08] [.theme-dark_&]:focus-visible:bg-white/10'
                     }`}
                     onMouseEnter={() => setSelectedIndex(index)}
                     onClick={() => {

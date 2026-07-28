@@ -324,9 +324,9 @@ function FinderApp() {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[rgba(255,255,255,0.28)] text-[var(--text-primary)] [.theme-dark_&]:bg-black/10">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[rgba(255,255,255,0.16)] text-[var(--text-primary)] [.theme-dark_&]:bg-black/[0.06]">
       <div className="flex min-h-0 flex-1">
-        <aside className="w-[190px] shrink-0 border-r border-black/[0.07] bg-white/[0.38] px-3 py-3 backdrop-blur-2xl [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/25">
+        <aside className="w-[190px] shrink-0 border-r border-black/[0.07] bg-white/[0.24] px-3 py-3 backdrop-blur-[34px] backdrop-saturate-[2] [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/[0.18]">
           <div className="space-y-3">
             {sidebarSections.map((section) => (
               <section key={section.title}>
@@ -358,8 +358,8 @@ function FinderApp() {
           </div>
         </aside>
 
-        <main className="flex min-w-0 flex-1 flex-col bg-white/[0.82] [.theme-dark_&]:bg-slate-950/30">
-          <header className="flex h-[58px] shrink-0 items-center gap-3 border-b border-black/[0.07] bg-[rgba(245,245,247,0.72)] px-4 backdrop-blur-[20px] backdrop-saturate-[180%] [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/45">
+        <main className="flex min-w-0 flex-1 flex-col bg-white/[0.5] [.theme-dark_&]:bg-slate-950/[0.22]">
+          <header className="flex h-[58px] shrink-0 items-center gap-3 border-b border-black/[0.07] bg-[rgba(245,245,247,0.46)] px-4 backdrop-blur-[34px] backdrop-saturate-[210%] [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/[0.34]">
             <div className="flex items-center gap-1">
               <button
                 type="button"
@@ -418,7 +418,7 @@ function FinderApp() {
                 <MoreHorizontal size={18} />
               </button>
               {actionMenuOpen ? (
-                <div className="absolute right-0 top-11 z-20 w-48 origin-top-right overflow-hidden rounded-[16px] border border-black/[0.07] bg-[rgba(245,245,247,0.78)] p-1.5 text-[13px] shadow-[0_2px_8px_rgba(0,0,0,0.10),0_30px_80px_rgba(0,0,0,0.24)] backdrop-blur-[20px] backdrop-saturate-[180%] transition [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/80">
+                <div className="absolute right-0 top-11 z-20 w-48 origin-top-right overflow-hidden rounded-[16px] border border-black/[0.07] bg-[rgba(245,245,247,0.52)] p-1.5 text-[13px] shadow-[0_2px_8px_rgba(0,0,0,0.10),0_30px_80px_rgba(0,0,0,0.24)] backdrop-blur-[30px] backdrop-saturate-[210%] transition [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/[0.58]">
                   <button
                     type="button"
                     className="flex h-8 w-full items-center justify-between rounded-[10px] px-3 text-left outline-none hover:bg-white/55 disabled:cursor-default disabled:opacity-40 [.theme-dark_&]:hover:bg-white/10"
@@ -485,7 +485,7 @@ function FinderApp() {
             </label>
           </header>
 
-          <section className="min-h-0 flex-1 overflow-auto bg-white/80 px-4 py-4 [.theme-dark_&]:bg-slate-950/20" aria-label={`${title} files`}>
+          <section className="min-h-0 flex-1 overflow-auto bg-white/[0.46] px-4 py-4 [.theme-dark_&]:bg-slate-950/[0.14]" aria-label={`${title} files`}>
             {items.length === 0 ? (
               <div className="grid h-full place-items-center">
                 <div className="text-center">
@@ -681,7 +681,7 @@ function FinderApp() {
         </main>
       </div>
 
-      <footer className="flex h-8 shrink-0 items-center gap-4 border-t border-black/[0.07] bg-[rgba(245,245,247,0.72)] px-4 text-[12px] text-[var(--text-secondary)] backdrop-blur-[20px] backdrop-saturate-[180%] [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/45">
+      <footer className="flex h-8 shrink-0 items-center gap-4 border-t border-black/[0.07] bg-[rgba(245,245,247,0.44)] px-4 text-[12px] text-[var(--text-secondary)] backdrop-blur-[34px] backdrop-saturate-[210%] [.theme-dark_&]:border-white/10 [.theme-dark_&]:bg-slate-950/[0.32]">
         <span className="shrink-0 tabular-nums">{itemStatus}</span>
         <span className="min-w-0 flex-1 truncate text-center">{selectedStatus}</span>
         <label className="flex shrink-0 items-center gap-2">

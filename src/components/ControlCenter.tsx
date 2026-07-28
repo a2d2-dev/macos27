@@ -36,8 +36,8 @@ function rangeBackground(value: number) {
   return `linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.95) ${value}%, rgba(148,163,184,0.34) ${value}%, rgba(148,163,184,0.34) 100%)`;
 }
 
-const moduleClass = 'rounded-[18px] bg-white/[0.22] shadow-[inset_0_1px_0_rgba(255,255,255,0.34)] ring-1 ring-white/25 backdrop-blur-[18px] [.theme-dark_&]:bg-white/[0.08] [.theme-dark_&]:ring-white/10';
-const moduleHoverClass = 'hover:bg-white/[0.32] [.theme-dark_&]:hover:bg-white/[0.12]';
+const moduleClass = 'rounded-[18px] bg-white/[0.16] shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] ring-1 ring-white/22 backdrop-blur-[26px] backdrop-saturate-[2] [.theme-dark_&]:bg-white/[0.06] [.theme-dark_&]:ring-white/10';
+const moduleHoverClass = 'hover:bg-white/[0.24] [.theme-dark_&]:hover:bg-white/[0.1]';
 
 function ToggleTile({ tile }: { tile: ToggleTileConfig }) {
   const enabled = useSystemStore((state) => state.controlCenterToggles[tile.id]);
@@ -48,7 +48,7 @@ function ToggleTile({ tile }: { tile: ToggleTileConfig }) {
     <button
       type="button"
       className={`flex h-[60px] min-w-0 items-center gap-3 ${moduleClass} px-3 text-left outline-none transition ${
-        enabled ? 'bg-white/[0.42] shadow-sm [.theme-dark_&]:bg-white/[0.14]' : moduleHoverClass
+        enabled ? 'bg-white/[0.28] shadow-sm [.theme-dark_&]:bg-white/[0.11]' : moduleHoverClass
       } focus-visible:ring-2 focus-visible:ring-white/70`}
       aria-pressed={enabled}
       onClick={() => toggle(tile.id)}
@@ -79,7 +79,7 @@ function ActionTile({
     <button
       type="button"
       className={`flex h-10 items-center gap-3 rounded-[16px] px-3 text-left text-[13px] outline-none transition ${
-        active ? 'bg-white/[0.42] shadow-sm [.theme-dark_&]:bg-white/[0.14]' : `bg-white/[0.18] ${moduleHoverClass}`
+        active ? 'bg-white/[0.28] shadow-sm [.theme-dark_&]:bg-white/[0.11]' : `bg-white/[0.12] ${moduleHoverClass}`
       } focus-visible:ring-2 focus-visible:ring-white/70`}
       aria-pressed={active}
       onClick={onClick}
@@ -224,7 +224,7 @@ export function ControlCenter() {
 
       <section className={`mt-2 ${moduleClass} p-2.5`} aria-label="Battery status">
         <div className="flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-white/35 text-emerald-500 ring-1 ring-white/25 [.theme-dark_&]:bg-white/10">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-white/24 text-emerald-500 ring-1 ring-white/22 [.theme-dark_&]:bg-white/[0.08]">
             <BatteryFull size={19} />
           </span>
           <div>
@@ -248,7 +248,7 @@ export function ControlCenter() {
 
       <button
         type="button"
-        className={`mt-auto flex h-10 shrink-0 items-center justify-center rounded-[16px] bg-white/[0.18] text-[13px] font-medium outline-none ring-1 ring-white/20 transition ${moduleHoverClass} focus-visible:ring-2 focus-visible:ring-white/70 [.theme-dark_&]:bg-white/[0.07]`}
+        className={`mt-auto flex h-10 shrink-0 items-center justify-center rounded-[16px] bg-white/[0.12] text-[13px] font-medium outline-none ring-1 ring-white/20 transition ${moduleHoverClass} focus-visible:ring-2 focus-visible:ring-white/70 [.theme-dark_&]:bg-white/[0.055]`}
       >
         Edit Controls…
       </button>
