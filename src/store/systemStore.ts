@@ -8,6 +8,7 @@ export type HighlightColor = AccentColor;
 export type IconWidgetStyle = 'default' | 'dark' | 'tinted' | 'clear';
 export type SidebarIconSize = 'small' | 'medium' | 'large';
 export type MenuDropdownId = 'apple' | 'app' | 'file' | 'edit' | 'view' | 'go' | 'window' | 'help';
+export type SystemPhase = 'boot' | 'login' | 'desktop';
 export type ControlCenterToggleId =
   | 'wifi'
   | 'bluetooth'
@@ -24,6 +25,7 @@ const systemThemeQuery = '(prefers-color-scheme: dark)';
 let unsubscribeSystemTheme: (() => void) | null = null;
 
 type SystemState = {
+  phase: SystemPhase;
   theme: ThemeMode;
   appearanceMode: AppearanceMode;
   wallpaperId: WallpaperId;
@@ -38,6 +40,10 @@ type SystemState = {
   volume: number;
   batteryLevel: number;
   controlCenterToggles: ControlCenterToggles;
+  finishBoot: () => void;
+  enterDesktop: () => void;
+  showLogin: () => void;
+  restartSystem: () => void;
   setNow: (now: Date) => void;
   toggleTheme: () => void;
   setAppearanceMode: (appearanceMode: AppearanceMode) => void;
@@ -86,7 +92,18 @@ function followSystemTheme(setTheme: (theme: ThemeMode) => void) {
   unsubscribeSystemTheme = () => mediaQuery.removeEventListener('change', handleChange);
 }
 
+export function formatSystemClock(date: Date) {
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+}
+
 export const useSystemStore = create<SystemState>((set) => ({
+  phase: 'boot',
   theme: 'light',
   appearanceMode: 'light',
   wallpaperId: 'tahoe',
@@ -110,6 +127,10 @@ export const useSystemStore = create<SystemState>((set) => ({
     nightShift: false,
     lowPowerMode: false,
   },
+  finishBoot: () => set({ phase: 'login', openMenuId: null, isControlCenterOpen: false }),
+  enterDesktop: () => set({ phase: 'desktop', openMenuId: null, isControlCenterOpen: false }),
+  showLogin: () => set({ phase: 'login', openMenuId: null, isControlCenterOpen: false }),
+  restartSystem: () => set({ phase: 'boot', openMenuId: null, isControlCenterOpen: false }),
   setNow: (now) => set({ now }),
   toggleTheme: () => {
     stopFollowingSystemTheme();

@@ -7,6 +7,7 @@ type MenuItem = {
   separatorBefore?: boolean;
   disabled?: boolean;
   submenu?: boolean;
+  action?: 'showLogin' | 'restartSystem';
 };
 
 const appleMenuItems: MenuItem[] = [
@@ -16,10 +17,10 @@ const appleMenuItems: MenuItem[] = [
   { label: 'Recent Items', separatorBefore: true, submenu: true },
   { label: 'Force Quit...', shortcut: '⌥⌘⎋', separatorBefore: true },
   { label: 'Sleep', separatorBefore: true },
-  { label: 'Restart...' },
-  { label: 'Shut Down...' },
-  { label: 'Lock Screen', shortcut: '⌃⌘Q', separatorBefore: true },
-  { label: 'Log Out LF...', shortcut: '⇧⌘Q' },
+  { label: 'Restart...', action: 'restartSystem' },
+  { label: 'Shut Down...', action: 'restartSystem' },
+  { label: 'Lock Screen', shortcut: '⌃⌘Q', separatorBefore: true, action: 'showLogin' },
+  { label: 'Log Out LF...', shortcut: '⇧⌘Q', action: 'showLogin' },
 ];
 
 const appMenuItems: MenuItem[] = [
@@ -68,6 +69,20 @@ const menuItemsByName: Record<string, MenuItem[]> = {
 
 function MenuContent({ items }: { items: MenuItem[] }) {
   const closeMenus = useSystemStore((state) => state.closeMenus);
+  const showLogin = useSystemStore((state) => state.showLogin);
+  const restartSystem = useSystemStore((state) => state.restartSystem);
+
+  const runAction = (action: MenuItem['action']) => {
+    closeMenus();
+
+    if (action === 'showLogin') {
+      showLogin();
+    }
+
+    if (action === 'restartSystem') {
+      restartSystem();
+    }
+  };
 
   return (
     <div className="glass-surface-strong min-w-[214px] rounded-xl p-1.5 text-[13px] font-normal text-[var(--text-primary)] shadow-2xl">
@@ -79,7 +94,7 @@ function MenuContent({ items }: { items: MenuItem[] }) {
           className={`flex h-7 w-full items-center gap-4 rounded-lg px-2 text-left outline-none transition ${
             item.separatorBefore ? 'mt-1 border-t border-white/25 pt-1' : ''
           } ${item.disabled ? 'text-[var(--text-secondary)] opacity-45' : 'hover:bg-[#0a84ff] hover:text-white focus-visible:bg-[#0a84ff] focus-visible:text-white'}`}
-          onClick={closeMenus}
+          onClick={() => runAction(item.action)}
         >
           <span className="min-w-0 flex-1 truncate">{item.label}</span>
           {item.shortcut ? <span className="text-[12px] opacity-70">{item.shortcut}</span> : null}
