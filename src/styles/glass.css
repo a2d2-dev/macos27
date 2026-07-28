@@ -1,20 +1,30 @@
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.42);
-  --glass-bg-strong: rgba(255, 255, 255, 0.62);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-highlight: rgba(255, 255, 255, 0.6);
-  --glass-titlebar: rgba(255, 255, 255, 0.5);
-  --glass-titlebar-inactive: rgba(238, 242, 247, 0.56);
+  --glass-bg: rgba(255, 255, 255, 0.26);
+  --glass-bg-strong: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.34);
+  --glass-highlight: rgba(255, 255, 255, 0.52);
+  --glass-titlebar: rgba(255, 255, 255, 0.34);
+  --glass-titlebar-inactive: rgba(238, 242, 247, 0.38);
+  --glass-blur: 38px;
+  --glass-strong-blur: 46px;
+  --glass-saturate: 210%;
+  --glass-strong-saturate: 220%;
   --glass-shadow: 0 22px 70px rgba(15, 23, 42, 0.24);
-  --window-bg: rgba(255, 255, 255, 0.66);
+  --window-bg: rgba(255, 255, 255, 0.48);
+  --window-blur: 48px;
+  --window-saturate: 220%;
   --window-radius: 16px;
   --window-shadow: 0 10px 34px rgba(15, 23, 42, 0.12), 0 38px 110px rgba(15, 23, 42, 0.22);
-  --window-toolbar-bg: rgba(248, 250, 252, 0.58);
-  --menubar-bg: rgba(255, 255, 255, 0.14);
-  --menubar-border: rgba(255, 255, 255, 0.14);
+  --window-toolbar-bg: rgba(248, 250, 252, 0.42);
+  --window-toolbar-blur: 34px;
+  --window-toolbar-saturate: 210%;
+  --menubar-bg: rgba(255, 255, 255, 0.1);
+  --menubar-border: rgba(255, 255, 255, 0.12);
+  --menubar-blur: 24px;
+  --menubar-saturate: 190%;
   --menubar-shadow: 0 1px 10px rgba(15, 23, 42, 0.04);
-  --menubar-control-hover: rgba(255, 255, 255, 0.2);
-  --menubar-control-active: rgba(255, 255, 255, 0.28);
+  --menubar-control-hover: rgba(255, 255, 255, 0.16);
+  --menubar-control-active: rgba(255, 255, 255, 0.23);
   --hairline: rgba(15, 23, 42, 0.08);
   --text-primary: rgba(15, 23, 42, 0.92);
   --text-secondary: rgba(51, 65, 85, 0.76);
@@ -22,22 +32,32 @@
 }
 
 .theme-dark {
-  --glass-bg: rgba(54, 54, 56, 0.38);
-  --glass-bg-strong: rgba(44, 44, 46, 0.78);
+  --glass-bg: rgba(54, 54, 56, 0.28);
+  --glass-bg-strong: rgba(44, 44, 46, 0.52);
   --glass-border: rgba(255, 255, 255, 0.13);
   --glass-highlight: rgba(255, 255, 255, 0.14);
-  --glass-titlebar: rgba(38, 38, 40, 0.72);
-  --glass-titlebar-inactive: rgba(30, 30, 32, 0.48);
+  --glass-titlebar: rgba(38, 38, 40, 0.5);
+  --glass-titlebar-inactive: rgba(30, 30, 32, 0.36);
+  --glass-blur: 42px;
+  --glass-strong-blur: 50px;
+  --glass-saturate: 205%;
+  --glass-strong-saturate: 215%;
   --glass-shadow: 0 24px 86px rgba(0, 0, 0, 0.46);
-  --window-bg: rgba(28, 28, 30, 0.76);
+  --window-bg: rgba(28, 28, 30, 0.54);
+  --window-blur: 52px;
+  --window-saturate: 215%;
   --window-radius: 16px;
   --window-shadow: 0 12px 38px rgba(0, 0, 0, 0.4), 0 42px 120px rgba(0, 0, 0, 0.52);
-  --window-toolbar-bg: rgba(46, 46, 48, 0.62);
-  --menubar-bg: rgba(18, 18, 20, 0.1);
+  --window-toolbar-bg: rgba(46, 46, 48, 0.42);
+  --window-toolbar-blur: 38px;
+  --window-toolbar-saturate: 205%;
+  --menubar-bg: rgba(18, 18, 20, 0.08);
   --menubar-border: rgba(255, 255, 255, 0.055);
+  --menubar-blur: 24px;
+  --menubar-saturate: 185%;
   --menubar-shadow: 0 1px 10px rgba(0, 0, 0, 0.06);
-  --menubar-control-hover: rgba(255, 255, 255, 0.1);
-  --menubar-control-active: rgba(255, 255, 255, 0.16);
+  --menubar-control-hover: rgba(255, 255, 255, 0.085);
+  --menubar-control-active: rgba(255, 255, 255, 0.13);
   --hairline: rgba(255, 255, 255, 0.095);
   --text-primary: rgba(245, 245, 247, 0.94);
   --text-secondary: rgba(214, 214, 218, 0.7);
@@ -48,23 +68,23 @@
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-highlight);
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 }
 
 .glass-surface-strong {
   background: var(--glass-bg-strong);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-highlight);
-  backdrop-filter: blur(34px) saturate(190%);
-  -webkit-backdrop-filter: blur(34px) saturate(190%);
+  backdrop-filter: blur(var(--glass-strong-blur)) saturate(var(--glass-strong-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-strong-blur)) saturate(var(--glass-strong-saturate));
 }
 
 .glass-titlebar {
   background: var(--glass-titlebar);
   border-bottom: 1px solid var(--glass-border);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(var(--window-toolbar-blur)) saturate(var(--window-toolbar-saturate));
+  -webkit-backdrop-filter: blur(var(--window-toolbar-blur)) saturate(var(--window-toolbar-saturate));
 }
 
 .glass-titlebar[data-active='false'] {
@@ -76,21 +96,21 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--window-radius);
   box-shadow: var(--window-shadow), inset 0 1px 0 0 var(--glass-highlight);
-  backdrop-filter: blur(34px) saturate(190%);
-  -webkit-backdrop-filter: blur(34px) saturate(190%);
+  backdrop-filter: blur(var(--window-blur)) saturate(var(--window-saturate));
+  -webkit-backdrop-filter: blur(var(--window-blur)) saturate(var(--window-saturate));
 }
 
 .glass-window-toolbar {
   background: var(--window-toolbar-bg);
   border-bottom: 1px solid var(--glass-border);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(var(--window-toolbar-blur)) saturate(var(--window-toolbar-saturate));
+  -webkit-backdrop-filter: blur(var(--window-toolbar-blur)) saturate(var(--window-toolbar-saturate));
 }
 
 .glass-menubar {
   background: var(--menubar-bg);
   border-bottom: 1px solid var(--menubar-border);
   box-shadow: var(--menubar-shadow);
-  backdrop-filter: blur(18px) saturate(170%);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  backdrop-filter: blur(var(--menubar-blur)) saturate(var(--menubar-saturate));
+  -webkit-backdrop-filter: blur(var(--menubar-blur)) saturate(var(--menubar-saturate));
 }
