@@ -111,7 +111,100 @@ button {
 }
 
 .dock-fisheye {
-  transition: transform 170ms ease, margin 170ms ease, filter 170ms ease;
+  --dock-scale: 1;
+  --dock-inverse-scale: 1;
+  --dock-shift: 0px;
+  --dock-lift: 0px;
+  --dock-bright: 1;
+  --dock-icon-bottom: 10px;
+  --dock-tooltip-bottom: calc(var(--dock-icon-size) + 34px);
+  transform: translate3d(var(--dock-shift), 0, 0) scale(var(--dock-scale));
+  transform-origin: bottom center;
+  transition: transform 210ms cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+}
+
+[aria-label='Dock'].dock-is-tracking .dock-fisheye {
+  transition-duration: 42ms;
+  transition-timing-function: linear;
+}
+
+.dock-icon-motion {
+  bottom: var(--dock-icon-bottom);
+  width: var(--dock-icon-size);
+  height: var(--dock-icon-size);
+  transform: translateX(-50%) translateY(var(--dock-lift)) scale(1);
+  transform-origin: bottom center;
+  filter: brightness(var(--dock-bright)) saturate(var(--dock-bright));
+  transition:
+    transform 110ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 110ms ease;
+  will-change: transform, filter;
+}
+
+.dock-fisheye.dock-is-pressing .dock-icon-motion {
+  transform: translateX(-50%) translateY(calc(var(--dock-lift) + 2px)) scale(0.94);
+  transition-duration: 65ms;
+}
+
+.dock-fisheye.dock-is-bouncing .dock-icon-motion {
+  animation: dock-click-bounce 430ms cubic-bezier(0.2, 0.82, 0.18, 1);
+}
+
+.dock-tooltip {
+  bottom: var(--dock-tooltip-bottom);
+  opacity: 0;
+  transform: translateX(-50%) translateY(4px) scale(var(--dock-inverse-scale));
+  transform-origin: bottom center;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.dock-tooltip.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(var(--dock-inverse-scale));
+}
+
+.dock-running-dot {
+  transform: scale(var(--dock-inverse-scale));
+  transform-origin: center;
+}
+
+@keyframes dock-click-bounce {
+  0% {
+    transform: translateX(-50%) translateY(calc(var(--dock-lift) + 2px)) scale(0.94);
+  }
+
+  38% {
+    transform: translateX(-50%) translateY(calc(var(--dock-lift) - 8px)) scale(1.08);
+  }
+
+  62% {
+    transform: translateX(-50%) translateY(calc(var(--dock-lift) + 1px)) scale(0.99);
+  }
+
+  82% {
+    transform: translateX(-50%) translateY(calc(var(--dock-lift) - 3px)) scale(1.03);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(var(--dock-lift)) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-fisheye,
+  .dock-icon-motion,
+  .dock-tooltip,
+  .dock-running-dot {
+    transition-duration: 1ms !important;
+    animation: none !important;
+  }
+
+  .dock-fisheye.dock-is-pressing .dock-icon-motion {
+    transform: translateX(-50%) translateY(calc(var(--dock-lift) + 1px)) scale(0.98);
+  }
 }
 
 .resize-handle {
