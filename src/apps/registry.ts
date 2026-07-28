@@ -1,5 +1,5 @@
 import type { AppDefinition } from './types';
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import {
   CalendarDays,
   Clapperboard,
@@ -14,6 +14,7 @@ import {
   Phone,
   Podcast,
   RefreshCw,
+  Search,
   Store,
   Video,
   type LucideIcon,
@@ -36,6 +37,51 @@ type PlaceholderAppConfig = {
   width?: number;
   height?: number;
 };
+
+type RegistryAppDefinition = AppDefinition & {
+  WindowToolbar?: ComponentType;
+};
+
+const appSizeOverrides: Record<string, Partial<AppDefinition['defaultWindow']>> = {
+  finder: { width: 980, height: 620, minWidth: 720, minHeight: 480 },
+  settings: { width: 920, height: 640, minWidth: 700, minHeight: 500 },
+  textedit: { width: 660, height: 460, minWidth: 420, minHeight: 300 },
+  preview: { width: 760, height: 540, minWidth: 480, minHeight: 340 },
+};
+
+function withWindowSizing(app: AppDefinition, toolbar?: ComponentType): RegistryAppDefinition {
+  const override = appSizeOverrides[app.id];
+
+  return {
+    ...app,
+    defaultWindow: {
+      ...app.defaultWindow,
+      ...override,
+    },
+    ...(toolbar ? { WindowToolbar: toolbar } : {}),
+  };
+}
+
+function SettingsWindowToolbar() {
+  return createElement(
+    'div',
+    { className: 'flex w-full items-center gap-3 text-[13px] text-[var(--text-secondary)]' },
+    createElement(
+      'label',
+      {
+        className:
+          'flex h-8 min-w-[240px] items-center gap-2 rounded-[10px] bg-white/45 px-3 ring-1 ring-black/[0.06] [.theme-dark_&]:bg-white/10 [.theme-dark_&]:ring-white/10',
+      },
+      createElement(Search, { size: 14 }),
+      createElement('input', {
+        className: 'min-w-0 flex-1 bg-transparent outline-none placeholder:text-[var(--text-secondary)]',
+        'aria-label': 'Search settings',
+        placeholder: 'Search',
+      }),
+    ),
+    createElement('span', { className: 'ml-auto hidden text-[12px] md:inline' }, 'Appearance'),
+  );
+}
 
 function createPlaceholderApp({
   id,
@@ -209,8 +255,8 @@ const appStoreApp = createPlaceholderApp({
   body: 'A placeholder App Store surface for app discovery and updates.',
 });
 
-export const apps: AppDefinition[] = [
-  finderApp,
+export const apps: RegistryAppDefinition[] = [
+  withWindowSizing(finderApp),
   launchpadApp,
   safariApp,
   messagesApp,
@@ -223,9 +269,9 @@ export const apps: AppDefinition[] = [
   contactsApp,
   remindersApp,
   freeformApp,
-  notesApp,
-  textEditApp,
-  previewApp,
+  withWindowSizing(notesApp),
+  withWindowSizing(textEditApp),
+  withWindowSizing(previewApp),
   musicApp,
   podcastsApp,
   tvApp,
@@ -233,7 +279,7 @@ export const apps: AppDefinition[] = [
   gamesApp,
   appStoreApp,
   calculatorApp,
-  settingsApp,
+  withWindowSizing(settingsApp, SettingsWindowToolbar),
 ];
 
 export const appById = new Map(apps.map((app) => [app.id, app]));

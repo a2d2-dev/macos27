@@ -31,27 +31,79 @@ type WindowState = {
   updateWindowFrame: (windowId: string, frame: WindowFrame) => void;
 };
 
-const menuBarHeight = 28;
-const dockReserve = 102;
+export const menuBarHeight = 28;
+export const dockReserve = 102;
+export const minViewportMargin = 8;
 const defaultZ = 100;
-const maximizedViewportMargin = 10;
 
 function nextZ(windows: AppWindow[]) {
   return windows.reduce((highest, window) => Math.max(highest, window.zIndex), defaultZ) + 1;
 }
 
-function centeredFrame(app: AppDefinition, offset: number): WindowFrame {
-  const width = app.defaultWindow.width;
-  const height = app.defaultWindow.height;
-  const viewportWidth = typeof window === 'undefined' ? 1280 : window.innerWidth;
-  const viewportHeight = typeof window === 'undefined' ? 800 : window.innerHeight;
+function getViewportSize() {
+  return {
+    width: typeof globalThis.innerWidth === 'number' ? globalThis.innerWidth : 1280,
+    height: typeof globalThis.innerHeight === 'number' ? globalThis.innerHeight : 800,
+  };
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function getViewportLimits() {
+  const viewport = getViewportSize();
+  const topLimit = menuBarHeight + minViewportMargin;
+  const bottomLimit = viewport.height - dockReserve - minViewportMargin;
+  const maxWidth = Math.max(1, viewport.width - minViewportMargin * 2);
+  const maxHeight = Math.max(1, bottomLimit - topLimit);
 
   return {
-    x: Math.max(24, Math.round((viewportWidth - width) / 2) + offset),
-    y: Math.max(menuBarHeight + 18, Math.round((viewportHeight - dockReserve - height) / 2) + offset),
+    ...viewport,
+    topLimit,
+    bottomLimit,
+    maxWidth,
+    maxHeight,
+  };
+}
+
+export function clampFrame(frame: WindowFrame, minWidth: number, minHeight: number): WindowFrame {
+  const { width: viewportWidth, topLimit, bottomLimit, maxWidth, maxHeight } = getViewportLimits();
+  const width = clamp(frame.width, Math.min(minWidth, maxWidth), maxWidth);
+  const height = clamp(frame.height, Math.min(minHeight, maxHeight), maxHeight);
+  const maxX = Math.max(minViewportMargin, viewportWidth - width - minViewportMargin);
+  const maxY = Math.max(topLimit, bottomLimit - height);
+
+  return {
+    x: clamp(frame.x, minViewportMargin, maxX),
+    y: clamp(frame.y, topLimit, maxY),
     width,
     height,
   };
+}
+
+function centeredFrame(app: AppDefinition, offset: number): WindowFrame {
+  const { width: viewportWidth, topLimit, maxHeight } = getViewportLimits();
+  const frame = clampFrame(
+    {
+      x: Math.round((viewportWidth - app.defaultWindow.width) / 2) + offset,
+      y: Math.round(topLimit + (maxHeight - app.defaultWindow.height) / 2) + offset,
+      width: app.defaultWindow.width,
+      height: app.defaultWindow.height,
+    },
+    app.defaultWindow.minWidth,
+    app.defaultWindow.minHeight,
+  );
+
+  return clampFrame(
+    {
+      ...frame,
+      x: Math.round((viewportWidth - frame.width) / 2) + offset,
+      y: Math.round(topLimit + (maxHeight - frame.height) / 2) + offset,
+    },
+    app.defaultWindow.minWidth,
+    app.defaultWindow.minHeight,
+  );
 }
 
 function getActiveAppId(windows: AppWindow[], activeWindowId: string | null) {
@@ -63,15 +115,9 @@ function getActiveAppId(windows: AppWindow[], activeWindowId: string | null) {
 }
 
 function maximizedFrame(): WindowFrame {
-  const viewportWidth = typeof window === 'undefined' ? 1280 : window.innerWidth;
-  const viewportHeight = typeof window === 'undefined' ? 800 : window.innerHeight;
+  const { topLimit, maxWidth, maxHeight } = getViewportLimits();
 
-  return {
-    x: maximizedViewportMargin,
-    y: menuBarHeight,
-    width: Math.max(1, viewportWidth - maximizedViewportMargin * 2),
-    height: Math.max(1, viewportHeight - menuBarHeight - dockReserve),
-  };
+  return clampFrame({ x: minViewportMargin, y: topLimit, width: maxWidth, height: maxHeight }, 1, 1);
 }
 
 export const useWindowStore = create<WindowState>((set) => ({

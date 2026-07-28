@@ -8,7 +8,15 @@ export type HighlightColor = AccentColor;
 export type IconWidgetStyle = 'default' | 'dark' | 'tinted' | 'clear';
 export type SidebarIconSize = 'small' | 'medium' | 'large';
 export type MenuDropdownId = 'apple' | 'app' | 'file' | 'edit' | 'view' | 'go' | 'window' | 'help';
-export type ControlCenterToggleId = 'wifi' | 'bluetooth' | 'airdrop' | 'focus' | 'stageManager' | 'screenMirroring' | 'nightShift';
+export type ControlCenterToggleId =
+  | 'wifi'
+  | 'bluetooth'
+  | 'airdrop'
+  | 'focus'
+  | 'stageManager'
+  | 'screenMirroring'
+  | 'nightShift'
+  | 'lowPowerMode';
 
 type ControlCenterToggles = Record<ControlCenterToggleId, boolean>;
 
@@ -100,6 +108,7 @@ export const useSystemStore = create<SystemState>((set) => ({
     stageManager: false,
     screenMirroring: false,
     nightShift: false,
+    lowPowerMode: false,
   },
   setNow: (now) => set({ now }),
   toggleTheme: () => {

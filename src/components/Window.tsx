@@ -1,8 +1,8 @@
-import { useEffect, useRef, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useRef, type ComponentType, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 import { createPortal } from 'react-dom';
 import type { AppDefinition } from '../apps/types';
 import type { AppWindow, WindowFrame } from '../store/windowStore';
-import { useWindowStore } from '../store/windowStore';
+import { clampFrame, useWindowStore } from '../store/windowStore';
 
 type WindowShellProps = {
   app: AppDefinition;
@@ -10,11 +10,12 @@ type WindowShellProps = {
   isActive: boolean;
 };
 
+type AppWithWindowToolbar = AppDefinition & {
+  WindowToolbar?: ComponentType;
+};
+
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
 
-const menuBarHeight = 28;
-const dockReserve = 102;
-const minViewportMargin = 8;
 const activeWindowResizeZIndex = 9100;
 
 type ResizeHandleSpec = {
@@ -75,30 +76,6 @@ const resizeHandleSpecs: ResizeHandleSpec[] = [
   },
 ];
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
-}
-
-function clampFrame(frame: WindowFrame, minWidth: number, minHeight: number): WindowFrame {
-  const viewportWidth = globalThis.innerWidth || 1280;
-  const viewportHeight = globalThis.innerHeight || 800;
-  const topLimit = menuBarHeight + minViewportMargin;
-  const bottomLimit = viewportHeight - dockReserve - minViewportMargin;
-  const maxWidth = Math.max(1, viewportWidth - minViewportMargin * 2);
-  const maxHeight = Math.max(1, bottomLimit - topLimit);
-  const width = clamp(frame.width, Math.min(minWidth, maxWidth), maxWidth);
-  const height = clamp(frame.height, Math.min(minHeight, maxHeight), maxHeight);
-  const maxX = Math.max(minViewportMargin, viewportWidth - width - minViewportMargin);
-  const maxY = Math.max(topLimit, bottomLimit - height);
-
-  return {
-    x: clamp(frame.x, minViewportMargin, maxX),
-    y: clamp(frame.y, topLimit, maxY),
-    width,
-    height,
-  };
-}
-
 function resizeFrame(
   startFrame: WindowFrame,
   direction: ResizeDirection,
@@ -153,6 +130,7 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
   const focusWindow = useWindowStore((state) => state.focusWindow);
   const updateWindowFrame = useWindowStore((state) => state.updateWindowFrame);
   const AppComponent = app.Component;
+  const ToolbarComponent = (app as AppWithWindowToolbar).WindowToolbar;
   const resizePortalRoot = typeof document === 'undefined' ? null : document.body;
 
   const clearActiveInteraction = () => {
@@ -262,7 +240,7 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
   return (
     <>
       <article
-        className="glass-surface-strong absolute overflow-hidden rounded-[18px] text-[var(--text-primary)]"
+        className="glass-window absolute flex flex-col overflow-hidden text-[var(--text-primary)]"
         style={{
           left: window.frame.x,
           top: window.frame.y,
@@ -274,7 +252,7 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
         aria-label={`${window.title} window`}
       >
         <div
-          className="glass-titlebar flex h-10 cursor-move select-none items-center justify-center px-4"
+          className="glass-titlebar flex h-9 shrink-0 cursor-move select-none items-center justify-center px-4"
           data-active={isActive}
           onPointerDown={beginDrag}
         >
@@ -316,7 +294,13 @@ export function WindowShell({ app, window, isActive }: WindowShellProps) {
           <div className={`text-sm font-semibold ${isActive ? 'opacity-90' : 'opacity-[0.48]'}`}>{window.title}</div>
         </div>
 
-        <div className="h-[calc(100%-2.5rem)] overflow-hidden">
+        {ToolbarComponent ? (
+          <div className="glass-window-toolbar flex h-12 shrink-0 items-center px-4">
+            <ToolbarComponent />
+          </div>
+        ) : null}
+
+        <div className="min-h-0 flex-1 overflow-hidden">
           <AppComponent />
         </div>
 
