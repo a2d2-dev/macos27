@@ -13,6 +13,7 @@ import {
   Wifi,
 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import type { ControlCenterToggleId } from '../store/systemStore';
 import { useSystemStore } from '../store/systemStore';
 
@@ -170,10 +171,10 @@ export function ControlCenter() {
     return null;
   }
 
-  return (
+  return createPortal(
     <div
       ref={panelRef}
-      className="glass-surface-strong fixed right-3 top-9 z-[10001] flex h-[600px] w-[320px] flex-col overflow-hidden rounded-[22px] p-3 text-[var(--text-primary)]"
+      className={`theme-${theme} glass-popover fixed right-3 top-9 z-[10001] flex h-[600px] w-[320px] flex-col overflow-hidden rounded-[22px] p-3 text-[var(--text-primary)]`}
       role="dialog"
       aria-label="Control Center"
     >
@@ -252,6 +253,7 @@ export function ControlCenter() {
       >
         Edit Controls…
       </button>
-    </div>
+    </div>,
+    document.body,
   );
 }

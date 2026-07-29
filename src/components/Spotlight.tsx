@@ -267,7 +267,7 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
         }
       `}</style>
       <div
-        className="spotlight-panel glass-surface-strong absolute left-1/2 top-[22vh] w-[min(680px,calc(100vw-32px))] -translate-x-1/2 overflow-hidden rounded-[22px] text-[var(--text-primary)] antialiased shadow-[0_2px_8px_rgba(0,0,0,0.10),0_30px_80px_rgba(0,0,0,0.24)]"
+        className="spotlight-panel glass-popover absolute left-1/2 top-[22vh] w-[min(680px,calc(100vw-32px))] -translate-x-1/2 overflow-hidden rounded-[22px] text-[var(--text-primary)] antialiased"
         role="dialog"
         aria-modal="true"
         aria-label="Spotlight"
