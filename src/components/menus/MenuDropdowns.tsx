@@ -85,7 +85,7 @@ function MenuContent({ items }: { items: MenuItem[] }) {
   };
 
   return (
-    <div className="glass-surface-strong min-w-[214px] rounded-xl p-1.5 text-[13px] font-normal text-[var(--text-primary)] shadow-2xl">
+    <div className="glass-popover min-w-[214px] rounded-xl p-1.5 text-[13px] font-normal text-[var(--text-primary)]">
       {items.map((item) => (
         <button
           key={`${item.label}-${item.shortcut ?? ''}`}

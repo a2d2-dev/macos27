@@ -25,6 +25,12 @@
   --menubar-shadow: 0 1px 10px rgba(15, 23, 42, 0.04);
   --menubar-control-hover: rgba(255, 255, 255, 0.16);
   --menubar-control-active: rgba(255, 255, 255, 0.23);
+  --popover-bg: rgba(250, 250, 252, 0.82);
+  --popover-border: rgba(255, 255, 255, 0.5);
+  --popover-highlight: rgba(255, 255, 255, 0.7);
+  --popover-blur: 44px;
+  --popover-saturate: 230%;
+  --popover-shadow: 0 18px 50px rgba(15, 23, 42, 0.18), 0 44px 110px rgba(15, 23, 42, 0.24);
   --hairline: rgba(15, 23, 42, 0.08);
   --text-primary: rgba(15, 23, 42, 0.92);
   --text-secondary: rgba(51, 65, 85, 0.76);
@@ -58,6 +64,12 @@
   --menubar-shadow: 0 1px 10px rgba(0, 0, 0, 0.06);
   --menubar-control-hover: rgba(255, 255, 255, 0.085);
   --menubar-control-active: rgba(255, 255, 255, 0.13);
+  --popover-bg: rgba(40, 40, 42, 0.82);
+  --popover-border: rgba(255, 255, 255, 0.18);
+  --popover-highlight: rgba(255, 255, 255, 0.2);
+  --popover-blur: 46px;
+  --popover-saturate: 220%;
+  --popover-shadow: 0 18px 58px rgba(0, 0, 0, 0.46), 0 48px 120px rgba(0, 0, 0, 0.56);
   --hairline: rgba(255, 255, 255, 0.095);
   --text-primary: rgba(245, 245, 247, 0.94);
   --text-secondary: rgba(214, 214, 218, 0.7);
@@ -78,6 +90,14 @@
   box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-highlight);
   backdrop-filter: blur(var(--glass-strong-blur)) saturate(var(--glass-strong-saturate));
   -webkit-backdrop-filter: blur(var(--glass-strong-blur)) saturate(var(--glass-strong-saturate));
+}
+
+.glass-popover {
+  background: var(--popover-bg);
+  border: 1px solid var(--popover-border);
+  box-shadow: var(--popover-shadow), inset 0 1px 0 0 var(--popover-highlight);
+  backdrop-filter: blur(var(--popover-blur)) saturate(var(--popover-saturate));
+  -webkit-backdrop-filter: blur(var(--popover-blur)) saturate(var(--popover-saturate));
 }
 
 .glass-titlebar {
