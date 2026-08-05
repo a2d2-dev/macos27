@@ -20,7 +20,7 @@ const appleMenuItems: MenuItem[] = [
   { label: 'Restart...', action: 'restartSystem' },
   { label: 'Shut Down...', action: 'restartSystem' },
   { label: 'Lock Screen', shortcut: '⌃⌘Q', separatorBefore: true, action: 'showLogin' },
-  { label: 'Log Out LF...', shortcut: '⇧⌘Q', action: 'showLogin' },
+  { label: 'Log Out Claude...', shortcut: '⇧⌘Q', action: 'showLogin' },
 ];
 
 const appMenuItems: MenuItem[] = [

@@ -51,11 +51,11 @@ export function LoginScreen() {
       <time className="login-screen__time" dateTime={now.toISOString()}>
         {formatSystemClock(now)}
       </time>
-      <section className={`login-screen__user ${isLoggingIn ? 'login-screen__user--logging-in' : ''}`} aria-label="User LF">
-        <button type="button" className="login-screen__avatar" aria-label="Log in as LF" onClick={login} disabled={isLoggingIn}>
-          {isLoggingIn ? <LoaderCircle className="login-screen__spinner" size={34} aria-hidden="true" /> : <span>LF</span>}
+      <section className={`login-screen__user ${isLoggingIn ? 'login-screen__user--logging-in' : ''}`} aria-label="User Claude">
+        <button type="button" className="login-screen__avatar" aria-label="Log in as Claude" onClick={login} disabled={isLoggingIn}>
+          {isLoggingIn ? <LoaderCircle className="login-screen__spinner" size={34} aria-hidden="true" /> : <span>C</span>}
         </button>
-        <h1>LF</h1>
+        <h1>Claude</h1>
         <p>{isLoggingIn ? 'Logging in...' : 'Click to log in'}</p>
       </section>
       <style>{`
