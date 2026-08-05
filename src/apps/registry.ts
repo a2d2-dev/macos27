@@ -22,6 +22,7 @@ import {
 import { AppPlaceholder } from './AppPlaceholder';
 import { calculatorApp } from './calculator';
 import { finderApp } from './finder';
+import { githubApp } from './github';
 import { musicApp } from './music';
 import { notesApp } from './notes';
 import { previewApp } from './preview';
@@ -44,6 +45,7 @@ type RegistryAppDefinition = AppDefinition & {
 
 const appSizeOverrides: Record<string, Partial<AppDefinition['defaultWindow']>> = {
   finder: { width: 980, height: 620, minWidth: 720, minHeight: 480 },
+  github: { width: 720, height: 520, minWidth: 520, minHeight: 420 },
   settings: { width: 920, height: 640, minWidth: 700, minHeight: 500 },
   textedit: { width: 660, height: 460, minWidth: 420, minHeight: 300 },
   preview: { width: 760, height: 540, minWidth: 480, minHeight: 340 },
@@ -258,6 +260,7 @@ const appStoreApp = createPlaceholderApp({
 export const apps: RegistryAppDefinition[] = [
   withWindowSizing(finderApp),
   launchpadApp,
+  withWindowSizing(githubApp),
   safariApp,
   messagesApp,
   mailApp,
