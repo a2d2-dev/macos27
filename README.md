@@ -1,17 +1,55 @@
-# macos27 — 纯前端 macOS 桌面模拟器
+# macOS27 Claude
 
-Liquid Glass 风格的 macOS 桌面模拟器，无后端，全部数据 mock，浏览器直接运行。
-对标 https://macos27.kimi.page/。
+An open-source macOS 27 web simulator built with React, TypeScript, Tailwind CSS, Vite, and zustand.
 
-## 技术栈
-Vite · React · TypeScript · Tailwind CSS · Zustand
+[![Live Demo](https://img.shields.io/badge/live-demo-0A84FF?style=flat-square)](https://macos27-claude.vercel.app/)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=111)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=fff)
+![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=fff)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-## 开发
+## 🔗 Live Demo: https://macos27-claude.vercel.app/
+
+![macOS27 Claude desktop](docs/screenshots/desktop.png)
+
+| Finder | Control Center |
+| --- | --- |
+| ![Finder window in macOS27 Claude](docs/screenshots/finder.png) | ![Control Center in macOS27 Claude](docs/screenshots/control-center.png) |
+
+## Features
+
+- Browser-native macOS-style desktop with boot, login, menu bar, Dock, windows, and widgets.
+- Liquid Glass-inspired visual system with light and dark appearance support.
+- Built-in app surfaces for Finder, Notes, TextEdit, Preview, Music, Calculator, Settings, and placeholder system apps.
+- Window management, Dock launching, Spotlight search, desktop widgets, and Control Center interactions.
+- Fully client-side implementation with no backend required for local development.
+
+## Tech Stack
+
+- React 18
+- TypeScript
+- Tailwind CSS
+- Vite
+- zustand
+- lucide-react
+
+## Run Locally
+
 ```bash
 npm install
 npm run dev
 ```
 
-## 文档
-- 设计与验收：`docs/spec.md`
-- Tickets：`.scratch/macos-sim/issues/`
+Vite starts the app at the printed local URL. For a fixed port:
+
+```bash
+npm run dev -- --port 5181
+```
+
+## Contributing
+
+Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), then look for issues labeled [`good first issue`](https://github.com/a2d2-dev/macos27-claude/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%22).
+
+## License
+
+[MIT](LICENSE)
