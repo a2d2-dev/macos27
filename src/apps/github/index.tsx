@@ -67,7 +67,7 @@ function GitHubApp() {
             <div>
               <h2 className="text-[17px] font-semibold tracking-[-0.01em] text-[#1d1d1f] [.theme-dark_&]:text-slate-100">How to contribute</h2>
               <p className="mt-0.5 text-[13px] leading-5 text-[#6e6e73] [.theme-dark_&]:text-slate-400">
-                CONTRIBUTING is not present in this checkout; follow the repository pull request flow.
+                Pick a good first issue, fork the repo, and open a pull request. See CONTRIBUTING.md for details.
               </p>
             </div>
           </div>
