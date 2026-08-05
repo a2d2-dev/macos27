@@ -10,6 +10,7 @@ export type FsItem = {
   size: number | null;
   icon: string;
   modified: string;
+  content?: string;
   children?: FsItem[];
 };
 
@@ -33,7 +34,7 @@ function folder(id: string, name: string, icon: string, modified: string, childr
   };
 }
 
-function file(id: string, name: string, type: string, size: number, icon: string, modified: string): FsItem {
+function file(id: string, name: string, type: string, size: number, icon: string, modified: string, content?: string): FsItem {
   return {
     id,
     name,
@@ -42,8 +43,17 @@ function file(id: string, name: string, type: string, size: number, icon: string
     size,
     icon,
     modified,
+    ...(content ? { content } : {}),
   };
 }
+
+const welcomeText = `Welcome to macOS 27.
+
+This is an open-source project, and contributions are welcome.
+
+If you would like to take part, open the GitHub app in the Dock, or visit github.com/a2d2-dev/macos27-claude.
+
+You can also explore the live demo at https://macos27-claude.vercel.app/.`;
 
 const mockFileSystem = folder('root', 'Macintosh HD', 'hard-drive', 'Today, 9:00 AM', [
   folder('recents', 'Recents', 'clock', 'Today, 9:12 AM', [
@@ -70,7 +80,7 @@ const mockFileSystem = folder('root', 'Macintosh HD', 'hard-drive', 'Today, 9:00
       file('tahoe-trip-itinerary', 'Itinerary.txt', 'Plain Text', 22_000, 'text', 'Today, 8:58 AM'),
       file('tahoe-trip-viewpoints', 'Viewpoints.md', 'Markdown Document', 36_000, 'text', 'Today, 8:55 AM'),
     ]),
-    file('desktop-welcome', 'Welcome.txt', 'Plain Text', 14_000, 'text', 'Today, 8:57 AM'),
+    file('desktop-welcome', 'Welcome.txt', 'Plain Text', 14_000, 'text', 'Today, 8:57 AM', welcomeText),
     folder('desktop-mockups', 'Mockups', 'folder', 'Today, 8:52 AM', [
       file('mockups-finder-grid', 'Finder Grid.png', 'PNG Image', 3_600_000, 'image', 'Today, 8:51 AM'),
       file('mockups-sidebar-study', 'Sidebar Study.png', 'PNG Image', 2_940_000, 'image', 'Today, 8:45 AM'),
